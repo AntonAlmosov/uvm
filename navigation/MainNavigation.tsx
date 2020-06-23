@@ -3,10 +3,10 @@ import { Feather } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import { HomeScreen } from "./../screens/HomeScreen";
 import { FavouriteScreen } from "./../screens/FavouriteScreen";
 import { SettingsScreen } from "../screens/SettingsScreen";
 import { Routes } from "./routes";
+import { HomeTabNavigator } from "./HomeTabNavigator";
 
 export const MainNavigation = () => {
   const Tab = createBottomTabNavigator();
@@ -18,7 +18,7 @@ export const MainNavigation = () => {
           tabBarIcon: ({ color }) => {
             let iconName = "";
 
-            if (route.name === Routes.Home) {
+            if (route.name === Routes.HomeNavigator) {
               iconName = "home";
             }
             if (route.name === Routes.Settings) {
@@ -31,11 +31,11 @@ export const MainNavigation = () => {
             return <Feather name={iconName} size={24} color={color} />;
           },
         })}
-        initialRouteName={Routes.Home}
+        initialRouteName={Routes.HomeNavigator}
         tabBarOptions={tabBarOption}
       >
         <Tab.Screen name={Routes.Favourite} component={FavouriteScreen} />
-        <Tab.Screen name={Routes.Home} component={HomeScreen} />
+        <Tab.Screen name={Routes.HomeNavigator} component={HomeTabNavigator} />
         <Tab.Screen name={Routes.Settings} component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
