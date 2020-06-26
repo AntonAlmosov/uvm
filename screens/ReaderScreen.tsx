@@ -5,6 +5,7 @@ import {
   NativeSyntheticEvent,
   ScrollView,
   NativeScrollEvent,
+  View,
 } from "react-native";
 import { NavHeader } from "../components/NavHeader";
 import { ReaderHeading } from "../components/reader/ReaderHeading";
@@ -37,8 +38,8 @@ export const ReaderScreen = () => {
 
 const styles = StyleSheet.create({
   container: {
+    position: "relative",
     flex: 1,
-    paddingBottom: 0,
     backgroundColor: "#fff",
   },
 });
