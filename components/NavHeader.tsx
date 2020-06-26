@@ -7,10 +7,16 @@ import { useNavigation } from "@react-navigation/native";
 interface NavHeaderProps {
   title: string;
   showSettings: boolean;
+  showTitle: boolean;
 }
 
-export const NavHeader = ({ title, showSettings }: NavHeaderProps) => {
+export const NavHeader = ({
+  title,
+  showSettings,
+  showTitle,
+}: NavHeaderProps) => {
   const navigation = useNavigation();
+
   return (
     <View
       style={{
@@ -45,7 +51,7 @@ export const NavHeader = ({ title, showSettings }: NavHeaderProps) => {
           textAlign: "center",
         }}
       >
-        {title}
+        {showTitle && title}
       </Text>
       {showSettings ? (
         <TouchableOpacity

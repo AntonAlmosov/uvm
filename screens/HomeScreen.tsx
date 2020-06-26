@@ -4,8 +4,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 
 import { TabHeader } from "./../components/TabHeader";
-import { StoryCard } from "./../components/StoryCard";
-import { HomeDataFragment } from "../components/HomeDataFragment";
+import { StoryCard } from "../components/home/StoryCard";
+import { HomeDataFragment } from "../components/home/HomeDataFragment";
 import { useNavigation } from "@react-navigation/native";
 import { Routes } from "../navigation/routes";
 

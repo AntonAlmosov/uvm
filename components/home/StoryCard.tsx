@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-import { AppStyles } from "./app-styles";
+import { AppStyles } from "../app-styles";
 
 interface StoryCardProps {
   title: string;

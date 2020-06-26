@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { AppStyles } from "./app-styles";
+import { AppStyles } from "../app-styles";
 
 interface HomeDataFragmentProps {
   data: string;

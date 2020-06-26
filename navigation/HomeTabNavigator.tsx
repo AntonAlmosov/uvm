@@ -3,7 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { HomeScreen } from "./../screens/HomeScreen";
 import { Routes } from "./routes";
-import { ReaderScreen } from "../screens/ReaderScheen";
+import { ReaderScreen } from "../screens/ReaderScreen";
 
 export const HomeTabNavigator = () => {
   const Stack = createStackNavigator();
