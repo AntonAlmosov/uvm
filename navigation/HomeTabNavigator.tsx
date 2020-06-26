@@ -3,6 +3,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import { HomeScreen } from "./../screens/HomeScreen";
 import { Routes } from "./routes";
+import { ReaderScreen } from "../screens/ReaderScheen";
 
 export const HomeTabNavigator = () => {
   const Stack = createStackNavigator();
@@ -14,6 +15,7 @@ export const HomeTabNavigator = () => {
       }}
     >
       <Stack.Screen name={Routes.Home} component={HomeScreen} />
+      <Stack.Screen name={Routes.Reader} component={ReaderScreen} />
     </Stack.Navigator>
   );
 };

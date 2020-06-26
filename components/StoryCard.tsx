@@ -25,6 +25,7 @@ export const StoryCard = ({ title, emoji, text, onPress }: StoryCardProps) => {
         backgroundColor: "#fff",
         ...AppStyles.shadows.general,
         borderRadius: 20,
+        marginBottom: 16,
       }}
       onPress={onPress}
     >
