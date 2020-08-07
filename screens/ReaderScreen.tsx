@@ -25,8 +25,8 @@ export const ReaderScreen = () => {
       <NavHeader title={"День 1"} showSettings showTitle={headerTitleShown} />
       <ScrollView
         style={styles.container}
-        onMomentumScrollBegin={(e) => handleTitleState(e)}
         onScroll={(e) => handleTitleState(e)}
+        scrollEventThrottle={16}
       >
         <ReaderHeading label="День 1" />
         <ReaderText text={text} />
