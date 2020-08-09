@@ -4,6 +4,7 @@ import { MainNavigation } from "./navigation/MainNavigation";
 import * as Font from "expo-font";
 
 import { Fonts } from "./components/app-styles";
+import { ModelContext } from "./model/model";
 
 export default function App() {
   const [isAppLoaded, setAppLoading] = React.useState(false);
@@ -33,6 +34,11 @@ export default function App() {
     console.log("App loaded");
   }
 
-  if (isAppLoaded) return <MainNavigation />;
+  if (isAppLoaded)
+    return (
+      <ModelContext>
+        <MainNavigation />
+      </ModelContext>
+    );
   else return <AppLoading startAsync={Load} onFinish={handleLoaded} />;
 }
