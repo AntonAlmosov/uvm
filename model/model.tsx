@@ -16,7 +16,7 @@ function assembleModel() {
       quotesState: quotesState,
     };
     return model;
-  }, []);
+  }, [quotesState.loading, quotesState.value]);
   return value;
 }
 

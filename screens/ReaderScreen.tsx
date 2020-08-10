@@ -29,7 +29,7 @@ export const ReaderScreen = () => {
         scrollEventThrottle={16}
       >
         <ReaderHeading label="День 1" />
-        <ReaderText text={text} />
+        <ReaderText text={text} origin={"День 1"} />
         <ReaderReaction emotes={["😖", "🙃", "🎰", "🐹"]} />
       </ScrollView>
     </SafeAreaView>

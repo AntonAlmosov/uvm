@@ -1,10 +1,12 @@
 import * as React from "react";
 import { AsyncStorage } from "react-native";
 import { StorageRoutes } from "../navigation/routes";
+import uuid from "react-native-uuid";
 
 export interface Quote {
   id: string;
   value: string;
+  origin: string;
 }
 
 export interface QuotesState {
@@ -12,7 +14,7 @@ export interface QuotesState {
   value: Quote[];
 
   update: () => void;
-  add: (quote: Quote) => void;
+  add: (value: string, origin: string) => void;
   remove: (id: string) => void;
 }
 
@@ -25,18 +27,22 @@ export function useQuotesState() {
       const value: Quote[] = await AsyncStorage.getItem(
         StorageRoutes.Quotes
       ).then((res) => JSON.parse(res || "[]"));
-      if (value) {
-        setQuotes(value);
-        setLoading(false);
-      }
+      setQuotes(value);
+      setLoading(false);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const addQuote = async (quote: Quote) => {
+  const addQuote = async (value: string, origin: string) => {
+    const alreadyQuoted = quotes.some((q) => q.value === value);
+    if (alreadyQuoted) {
+      return;
+    }
+
+    const newQuote: Quote = { id: uuid.v4(), value, origin };
     try {
-      const value: Quote[] = [...quotes, quote];
+      const value: Quote[] = [...quotes, newQuote];
       await AsyncStorage.setItem(
         StorageRoutes.Quotes,
         JSON.stringify(value),
@@ -49,11 +55,11 @@ export function useQuotesState() {
 
   const removeQuote = async (id: string) => {
     try {
-      const value: Quote[] = quotes.filter((q) => q.id !== id);
+      const nextValue: Quote[] = quotes.filter((q) => q.id !== id);
       await AsyncStorage.setItem(
         StorageRoutes.Quotes,
-        JSON.stringify(value),
-        () => setQuotes(value)
+        JSON.stringify(nextValue),
+        () => setQuotes(nextValue)
       );
     } catch (err) {
       console.error(err);
