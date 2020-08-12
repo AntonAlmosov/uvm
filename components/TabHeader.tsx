@@ -17,7 +17,7 @@ export const TabHeader = ({ label, showPoints }: TabHeaderProps) => {
         height: 86,
         paddingTop: 28,
         backgroundColor: "#fff",
-        zIndex: 100,
+        zIndex: 1,
       }}
     >
       <Text
