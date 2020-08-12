@@ -6,6 +6,7 @@ import {
   ScrollView,
   NativeScrollEvent,
   View,
+  Dimensions,
 } from "react-native";
 import { NavHeader } from "../components/NavHeader";
 import { ReaderHeading } from "../components/reader/ReaderHeading";
@@ -13,6 +14,7 @@ import { ReaderText } from "../components/reader/ReaderText";
 import { ReaderReaction } from "../components/reader/ReaderReaction";
 import { useModel } from "../model/model";
 import { BackgroundColor } from "../model/settings-state";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export const ReaderScreen = () => {
   const settingsState = useModel().settingsState;

@@ -103,7 +103,9 @@ const SettingsButton = () => {
           width: 44,
           height: 44,
         }}
-        onPress={() => setShowModal(!showModal)}
+        onPress={() => {
+          setShowModal(true);
+        }}
       >
         <MaterialCommunityIcons
           name={"format-color-text"}
@@ -112,19 +114,28 @@ const SettingsButton = () => {
           style={{ marginTop: 5 }}
         />
       </TouchableOpacity>
-      {showModal && (
-        <TouchableOpacity
+      {(showModal || showFontsModal) && (
+        <View
           style={{
-            zIndex: 998,
+            width: Dimensions.get("screen").width,
+            height: Dimensions.get("screen").height,
             position: "absolute",
+            zIndex: 998,
+            right: -16,
             top: 0,
-            width: Dimensions.get("window").width,
-            height: Dimensions.get("window").height,
-            right: -AppStyles.screenPadding,
-            backgroundColor: "#fff",
           }}
-          onPress={() => setShowModal(false)}
-        ></TouchableOpacity>
+        >
+          <TouchableOpacity
+            style={{
+              width: "100%",
+              height: "100%",
+            }}
+            onPress={() => {
+              setShowModal(false);
+              setShowFontsModal(false);
+            }}
+          ></TouchableOpacity>
+        </View>
       )}
       {showModal && (
         <SettingsModal
