@@ -8,9 +8,12 @@ import { StoryCard } from "../components/home/StoryCard";
 import { HomeDataFragment } from "../components/home/HomeDataFragment";
 import { useNavigation } from "@react-navigation/native";
 import { Routes } from "../navigation/routes";
+import moment from "moment";
+import { calculateTime } from "../components/utils";
 
 export const HomeScreen = () => {
   const navigation = useNavigation();
+  const timeToNextChapter = calculateTime();
   const text1 =
     "«Он никак не мог представить, что же могло случиться, если ничего неизменилось. А коли была возможность, то хотя бы её эхо должно было дойти до него.»";
   const text2 = `«Смерть – это ж признание в своей жизни.»`;
@@ -34,7 +37,7 @@ export const HomeScreen = () => {
           onPress={() => navigation.navigate(Routes.Reader)}
         />
         <View style={{ marginTop: 32, paddingBottom: 128 }}>
-          <HomeDataFragment data={"12:47:32"} label={"до новой главы"} />
+          <HomeDataFragment data={calculateTime()} label={"до новой главы"} />
           <HomeDataFragment data={"1 из 365"} label={"глав прочитано"} />
           <HomeDataFragment data={"27 из 365"} label={"глав пропущено"} />
         </View>

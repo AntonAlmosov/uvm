@@ -3,6 +3,8 @@ import { View, Text } from "react-native";
 
 import { AppStyles } from "../app-styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useModel } from "../../model/model";
+import { BackgroundColor } from "../../model/settings-state";
 
 interface ReaderReactionProps {
   emotes: [string, string, string, string];
@@ -32,6 +34,16 @@ interface ReactionEmoteProps {
 }
 
 const ReactionEmote = ({ emote }: ReactionEmoteProps) => {
+  const settingsState = useModel().settingsState;
+  const fontColor =
+    settingsState.backgroundColor === BackgroundColor.Dark
+      ? "#E2D4D4"
+      : "#000000";
+  const shadow =
+    settingsState.backgroundColor === BackgroundColor.Dark
+      ? AppStyles.shadows.light
+      : AppStyles.shadows.general;
+
   const [active, setActive] = React.useState(false);
 
   const PADDING = 8;
@@ -41,13 +53,13 @@ const ReactionEmote = ({ emote }: ReactionEmoteProps) => {
     <TouchableOpacity
       containerStyle={{ overflow: "visible" }}
       style={{
-        ...AppStyles.shadows.general,
+        ...shadow,
         overflow: "visible",
         width: EMOTE_WIDTH,
         height: 48,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: active ? "#FDEC55" : "#fff",
+        backgroundColor: active ? "#FDEC55" : settingsState.backgroundColor,
         borderRadius: 10,
       }}
       onPress={() => setActive(!active)}

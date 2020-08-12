@@ -26,6 +26,15 @@ export default function App() {
       [Fonts.SFProSemibold]: {
         uri: require("./assets/fonts/SF-Pro-Text-Semibold.otf"),
       },
+      [Fonts.InterRegular]: {
+        uri: require("./assets/fonts/Inter-Regular.ttf"),
+      },
+      [Fonts.LoraRegular]: {
+        uri: require("./assets/fonts/Lora-Regular.ttf"),
+      },
+      [Fonts.SpectralRegular]: {
+        uri: require("./assets/fonts/Spectral-Regular.ttf"),
+      },
     });
   }
 

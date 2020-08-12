@@ -4,6 +4,7 @@ import { AppStyles } from "../app-styles";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useModel } from "../../model/model";
 import Toast from "react-native-root-toast";
+import { BackgroundColor, FontSize } from "../../model/settings-state";
 
 interface ReaderTextProps {
   text: string;
@@ -34,6 +35,11 @@ interface ParagraphProps {
 
 const Paragraph = ({ text, origin }: ParagraphProps) => {
   const quotesState = useModel().quotesState;
+  const settingsState = useModel().settingsState;
+  const fontColor =
+    settingsState.backgroundColor === BackgroundColor.Dark
+      ? "#E2D4D4"
+      : "#000000";
   const onLongPress = () => {
     ActionSheetIOS.showActionSheetWithOptions(
       {
@@ -54,12 +60,21 @@ const Paragraph = ({ text, origin }: ParagraphProps) => {
       }
     );
   };
+
   return (
     <TouchableOpacity
       style={{ marginBottom: AppStyles.text.text.lineHeight }}
       onLongPress={onLongPress}
     >
-      <Text style={{ ...AppStyles.text.text }}>{text}</Text>
+      <Text
+        style={{
+          ...AppStyles.text[settingsState.fontSize],
+          color: fontColor,
+          fontFamily: settingsState.fontFamily,
+        }}
+      >
+        {text}
+      </Text>
     </TouchableOpacity>
   );
 };

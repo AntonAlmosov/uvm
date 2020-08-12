@@ -1,12 +1,15 @@
 import { Dimensions } from "react-native";
 
-export const Fonts = {
-  NewYorkRegular: "NewYorkMedium-Regular",
-  NewYorkSemibold: "NewYorkMedium-Semibold",
-  SFProRegular: "SFProText-Regular",
-  SFProRegularItalic: "SFProText-RegularItalic",
-  SFProSemibold: "SFProText-Semibold",
-};
+export enum Fonts {
+  NewYorkRegular = "NewYorkMedium-Regular",
+  NewYorkSemibold = "NewYorkMedium-Semibold",
+  SFProRegular = "SFProText-Regular",
+  SFProRegularItalic = "SFProText-RegularItalic",
+  SFProSemibold = "SFProText-Semibold",
+  InterRegular = "Inter-Regular",
+  LoraRegular = "Lora-Regular",
+  SpectralRegular = "Spectral-Regular",
+}
 
 export const AppStyles = {
   text: {
@@ -64,10 +67,36 @@ export const AppStyles = {
       lineHeight: 24,
       fontWeight: "600" as "600",
     },
+    textBiggest: {
+      fontSize: 24,
+      lineHeight: 38,
+      fontWeight: "400" as "400",
+    },
+    textBig: {
+      fontSize: 20,
+      lineHeight: 30,
+      fontWeight: "400" as "400",
+    },
+    textSmall: {
+      fontSize: 15,
+      lineHeight: 20,
+      fontWeight: "400" as "400",
+    },
+    textSmallest: {
+      fontSize: 13,
+      lineHeight: 17,
+      fontWeight: "400" as "400",
+    },
   },
   shadows: {
     general: {
       shadowColor: "#000",
+      shadowOpacity: 0.07,
+      shadowOffset: { width: 0, height: 2 },
+      shadowRadius: 20,
+    },
+    light: {
+      shadowColor: "#fff",
       shadowOpacity: 0.07,
       shadowOffset: { width: 0, height: 2 },
       shadowRadius: 20,

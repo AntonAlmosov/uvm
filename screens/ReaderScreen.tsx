@@ -11,8 +11,12 @@ import { NavHeader } from "../components/NavHeader";
 import { ReaderHeading } from "../components/reader/ReaderHeading";
 import { ReaderText } from "../components/reader/ReaderText";
 import { ReaderReaction } from "../components/reader/ReaderReaction";
+import { useModel } from "../model/model";
+import { BackgroundColor } from "../model/settings-state";
 
 export const ReaderScreen = () => {
+  const settingsState = useModel().settingsState;
+
   const [headerTitleShown, setHeaderTitleShown] = React.useState(false);
 
   const handleTitleState = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -21,10 +25,23 @@ export const ReaderScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <NavHeader title={"День 1"} showSettings showTitle={headerTitleShown} />
+    <SafeAreaView
+      style={{
+        ...styles.container,
+        backgroundColor: settingsState.backgroundColor,
+      }}
+    >
+      <NavHeader
+        title={"День 1"}
+        showSettings
+        showTitle={headerTitleShown}
+        useSettingsConstraints
+      />
       <ScrollView
-        style={styles.container}
+        style={{
+          ...styles.container,
+          backgroundColor: settingsState.backgroundColor,
+        }}
         onScroll={(e) => handleTitleState(e)}
         scrollEventThrottle={16}
       >
