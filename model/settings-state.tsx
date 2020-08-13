@@ -72,6 +72,9 @@ export function useSettingsState() {
     setting: Settings,
     value: BackgroundColor | FontSize | Fonts
   ) => {
+    if (loading) {
+      return;
+    }
     try {
       await AsyncStorage.setItem(setting, value, () => {
         switch (setting) {

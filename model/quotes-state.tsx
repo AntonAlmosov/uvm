@@ -35,6 +35,9 @@ export function useQuotesState() {
   };
 
   const addQuote = async (value: string, origin: string) => {
+    if (loading) {
+      return;
+    }
     const alreadyQuoted = quotes.some((q) => q.value === value);
     if (alreadyQuoted) {
       return;
@@ -54,6 +57,9 @@ export function useQuotesState() {
   };
 
   const removeQuote = async (id: string) => {
+    if (loading) {
+      return;
+    }
     try {
       const nextValue: Quote[] = quotes.filter((q) => q.id !== id);
       await AsyncStorage.setItem(
