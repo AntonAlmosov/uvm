@@ -2,25 +2,29 @@ import React from "react";
 
 import { Quote, useQuotesState, QuotesState } from "./quotes-state";
 import { useSettingsState, SettingsState } from "./settings-state";
+import { useReaderState, ReaderState } from "./reader-state";
 
 const Context = React.createContext<Model | null>(null);
 
 interface Model {
   quotesState: QuotesState;
   settingsState: SettingsState;
+  readerState: ReaderState;
 }
 
 function assembleModel() {
   const quotesState = useQuotesState();
   const settingsState = useSettingsState();
+  const readerState = useReaderState();
 
   const value = React.useMemo(() => {
     const model: Model = {
       quotesState,
       settingsState,
+      readerState,
     };
     return model;
-  }, [quotesState, settingsState]);
+  }, [quotesState, settingsState, readerState]);
   return value;
 }
 

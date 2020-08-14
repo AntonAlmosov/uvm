@@ -9,4 +9,8 @@ export const Routes = {
 
 export enum StorageRoutes {
   Quotes = "Quotes",
+  InitialDate = "InitialDate",
+  ReadChapters = "ReadChapters",
+  OpenedChapters = "OpenedChapters",
+  Points = "Points",
 }
