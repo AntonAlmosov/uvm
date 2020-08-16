@@ -79,16 +79,17 @@ export function useReaderState() {
         return;
       }
       const currentDay = moment().startOf("day");
-      setDaysPassed(currentDay.diff(moment(value, "x"), "day"));
+      const currentDaysPassed = currentDay.diff(moment(value, "x"), "day");
+      setDaysPassed(currentDaysPassed);
 
-      if (daysPassed === 0) {
-        setChapters([{ ...data[daysPassed], id: daysPassed }]);
+      if (currentDaysPassed === 0) {
+        setChapters([{ ...data[0], id: 0 }]);
         return;
       }
 
       setChapters([
-        { ...data[daysPassed], id: daysPassed },
-        { ...data[daysPassed - 1], id: daysPassed - 1 },
+        { ...data[currentDaysPassed], id: currentDaysPassed },
+        { ...data[currentDaysPassed - 1], id: currentDaysPassed - 1 },
       ]);
       return;
     } catch (err) {
