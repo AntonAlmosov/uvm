@@ -13,7 +13,12 @@ import { ReaderHeading } from "../components/reader/ReaderHeading";
 import { ReaderText } from "../components/reader/ReaderText";
 import { ReaderReaction } from "../components/reader/ReaderReaction";
 import { useModel } from "../model/model";
-import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
+import {
+  useNavigation,
+  useRoute,
+  RouteProp,
+  useFocusEffect,
+} from "@react-navigation/native";
 import { data } from "../model/data.json";
 
 type ReaderScreenRouteProps = {
@@ -30,16 +35,9 @@ export const ReaderScreen = () => {
   const chapter = data[chapterId];
   const [headerTitleShown, setHeaderTitleShown] = React.useState(false);
 
-  React.useEffect(() => {
-    navigation.addListener("focus", () =>
-      readerState.markChapterAsRead(chapterId)
-    );
-    return () => {
-      navigation.removeListener("focus", () =>
-        readerState.markChapterAsRead(chapterId)
-      );
-    };
-  }, []);
+  useFocusEffect(() => {
+    readerState.markChapterAsRead(chapterId);
+  });
 
   const handleTitleState = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (e.nativeEvent.contentOffset.y > 5) setHeaderTitleShown(true);
