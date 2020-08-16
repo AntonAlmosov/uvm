@@ -41,10 +41,7 @@ export function useReaderState() {
   const [timeToNextChapter, setTimeToNextChapter] = React.useState<string>("");
 
   const onAppLoad = async () => {
-    setInterval(
-      () => setTimeToNextChapter(moment().startOf("day").format("x")),
-      1000
-    );
+    setTimeToNextChapter(calculateTime());
     await getChapters();
     await getReadChapters();
     await getPoints();
