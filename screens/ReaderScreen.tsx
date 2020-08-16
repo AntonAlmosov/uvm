@@ -13,13 +13,33 @@ import { ReaderHeading } from "../components/reader/ReaderHeading";
 import { ReaderText } from "../components/reader/ReaderText";
 import { ReaderReaction } from "../components/reader/ReaderReaction";
 import { useModel } from "../model/model";
-import { BackgroundColor } from "../model/settings-state";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
+import { data } from "../model/data.json";
+
+type ReaderScreenRouteProps = {
+  Reader: { chapter: string };
+};
+
+type ScreenProps = RouteProp<ReaderScreenRouteProps, "Reader">;
 
 export const ReaderScreen = () => {
   const settingsState = useModel().settingsState;
-
+  const readerState = useModel().readerState;
+  const navigation = useNavigation();
+  const chapterId = Number(useRoute<ScreenProps>().params.chapter);
+  const chapter = data[chapterId];
   const [headerTitleShown, setHeaderTitleShown] = React.useState(false);
+
+  React.useEffect(() => {
+    navigation.addListener("focus", () =>
+      readerState.markChapterAsRead(chapterId)
+    );
+    return () => {
+      navigation.removeListener("focus", () =>
+        readerState.markChapterAsRead(chapterId)
+      );
+    };
+  }, []);
 
   const handleTitleState = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
     if (e.nativeEvent.contentOffset.y > 5) setHeaderTitleShown(true);
@@ -34,7 +54,7 @@ export const ReaderScreen = () => {
       }}
     >
       <NavHeader
-        title={"День 1"}
+        title={"День " + (chapterId + 1)}
         showSettings
         showTitle={headerTitleShown}
         useSettingsConstraints
@@ -47,8 +67,11 @@ export const ReaderScreen = () => {
         onScroll={(e) => handleTitleState(e)}
         scrollEventThrottle={16}
       >
-        <ReaderHeading label="День 1" />
-        <ReaderText text={text} origin={"День 1"} />
+        <ReaderHeading label={chapter.title} />
+        <ReaderText
+          text={chapter.datatext}
+          origin={"День " + (chapterId + 1)}
+        />
         <ReaderReaction emotes={["😖", "🙃", "🎰", "🐹"]} />
       </ScrollView>
     </SafeAreaView>

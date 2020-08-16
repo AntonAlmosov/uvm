@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { AppStyles } from "./app-styles";
+import { useModel } from "../model/model";
 
 interface TabHeaderProps {
   label: string;
@@ -8,6 +9,7 @@ interface TabHeaderProps {
 }
 
 export const TabHeader = ({ label, showPoints }: TabHeaderProps) => {
+  const points = useModel().readerState.points;
   return (
     <View
       style={{
@@ -40,7 +42,7 @@ export const TabHeader = ({ label, showPoints }: TabHeaderProps) => {
           }}
         >
           <Text style={{ ...AppStyles.text.quoteCaption, textAlign: "center" }}>
-            10Б
+            {points + " Б"}
           </Text>
         </TouchableOpacity>
       )}

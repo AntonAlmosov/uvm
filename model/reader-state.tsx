@@ -4,8 +4,10 @@ import { StorageRoutes } from "../navigation/routes";
 import uuid from "react-native-uuid";
 import { data } from "./data.json";
 import moment from "moment";
+import { calculateTime } from "../components/utils";
 
 export interface Chapter {
+  id: number;
   title: string;
   smile: string;
   text: string;
@@ -17,7 +19,15 @@ export interface OpenedChapter {
   date: string;
 }
 
-export interface ReaderState {}
+export interface ReaderState {
+  chapters: Chapter[];
+  points: number;
+  readChapters: number;
+  skippedChapters: number;
+  timeToNextChapter: string;
+
+  markChapterAsRead: (id: number) => void;
+}
 
 export function useReaderState() {
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -28,8 +38,10 @@ export function useReaderState() {
   const [openedChapters, setOpenedChapters] = React.useState<OpenedChapter[]>(
     []
   );
+  const [timeToNextChapter, setTimeToNextChapter] = React.useState<string>("");
 
   const onAppLoad = async () => {
+    setInterval(() => setTimeToNextChapter(calculateTime()), 1000);
     await getChapters();
     await getReadChapters();
     await getPoints();
@@ -40,7 +52,7 @@ export function useReaderState() {
   const handleFirstAppLoad = async () => {
     const initialDate = moment().startOf("day").format("x");
     await AsyncStorage.setItem(StorageRoutes.InitialDate, initialDate, () =>
-      setChapters([data[0]])
+      setChapters([{ ...data[0], id: 0 }])
     );
     await AsyncStorage.setItem(
       StorageRoutes.ReadChapters,
@@ -60,6 +72,7 @@ export function useReaderState() {
   const getChapters = async () => {
     try {
       const value = await AsyncStorage.getItem(StorageRoutes.InitialDate);
+      console.log(value);
       //Setting initial date
       if (!value) {
         await handleFirstAppLoad();
@@ -69,11 +82,14 @@ export function useReaderState() {
       setDaysPassed(currentDay.diff(moment(value, "x"), "day"));
 
       if (daysPassed === 0) {
-        setChapters([data[daysPassed]]);
+        setChapters([{ ...data[daysPassed], id: daysPassed }]);
         return;
       }
 
-      setChapters([data[daysPassed], data[daysPassed - 1]]);
+      setChapters([
+        { ...data[daysPassed], id: daysPassed },
+        { ...data[daysPassed - 1], id: daysPassed - 1 },
+      ]);
       return;
     } catch (err) {
       console.error(err);
@@ -143,17 +159,24 @@ export function useReaderState() {
       () => setOpenedChapters([...openedChapters, chapter])
     );
     await changePoints(-1);
+    await getOpenedChapters();
   };
 
   React.useEffect(() => {
-    const curDay = moment().startOf("day").format("x");
-
-    const nextDay = moment().add(1, "day").startOf("day");
-    console.log(nextDay.diff(moment(curDay, "x"), "day"));
+    onAppLoad();
   }, []);
 
   return React.useMemo(() => {
-    const state: ReaderState = {};
+    const skippedChapters = daysPassed + 1 - readChapters.length;
+    const state: ReaderState = {
+      chapters,
+      points,
+      readChapters: readChapters.length,
+      skippedChapters: skippedChapters < 0 ? 0 : skippedChapters,
+      timeToNextChapter,
+
+      markChapterAsRead: (id: number) => markAsRead(id),
+    };
     return state;
-  }, []);
+  }, [chapters, daysPassed, readChapters, points, openedChapters]);
 }

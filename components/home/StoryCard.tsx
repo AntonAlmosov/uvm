@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Emoji from "react-native-emoji";
 
 import { AppStyles } from "../app-styles";
 
@@ -33,15 +34,14 @@ export const StoryCard = ({ title, emoji, text, onPress }: StoryCardProps) => {
         <Text style={{ ...AppStyles.text.heading2, width: "60%" }}>
           {title}
         </Text>
-        <Text
+        {/* <Emoji
+          name={emoji}
           style={{
             ...AppStyles.text.heading2,
             textAlign: "right",
             width: "15%",
           }}
-        >
-          {emoji}
-        </Text>
+        /> */}
       </View>
       <Text style={{ ...AppStyles.text.text, marginTop: 15 }}>{text}</Text>
     </TouchableOpacity>

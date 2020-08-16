@@ -10,10 +10,11 @@ import { useNavigation } from "@react-navigation/native";
 import { Routes } from "../navigation/routes";
 import moment from "moment";
 import { calculateTime } from "../components/utils";
+import { useModel } from "../model/model";
 
 export const HomeScreen = () => {
   const navigation = useNavigation();
-  const timeToNextChapter = calculateTime();
+  const readerState = useModel().readerState;
   const text1 =
     "«Он никак не мог представить, что же могло случиться, если ничего неизменилось. А коли была возможность, то хотя бы её эхо должно было дойти до него.»";
   const text2 = `«Смерть – это ж признание в своей жизни.»`;
@@ -24,22 +25,30 @@ export const HomeScreen = () => {
         style={{ flex: 1, paddingTop: 40 }}
         showsVerticalScrollIndicator={false}
       >
-        <StoryCard
-          title="День 1"
-          emoji="😑"
-          text={text1}
-          onPress={() => navigation.navigate(Routes.Reader)}
-        />
-        <StoryCard
-          title="День 11"
-          emoji="◼️"
-          text={text2}
-          onPress={() => navigation.navigate(Routes.Reader)}
-        />
+        {readerState.chapters.map((ch) => (
+          <StoryCard
+            key={ch.id}
+            title={"День " + (ch.id + 1)}
+            emoji={ch.smile}
+            text={ch.text}
+            onPress={() =>
+              navigation.navigate(Routes.Reader, { chapter: ch.id })
+            }
+          />
+        ))}
         <View style={{ marginTop: 32, paddingBottom: 128 }}>
-          <HomeDataFragment data={calculateTime()} label={"до новой главы"} />
-          <HomeDataFragment data={"1 из 365"} label={"глав прочитано"} />
-          <HomeDataFragment data={"27 из 365"} label={"глав пропущено"} />
+          <HomeDataFragment
+            data={readerState.timeToNextChapter}
+            label={"до новой главы"}
+          />
+          <HomeDataFragment
+            data={readerState.readChapters + " из 365"}
+            label={"глав прочитано"}
+          />
+          <HomeDataFragment
+            data={readerState.skippedChapters + " из 365"}
+            label={"глав пропущено"}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
