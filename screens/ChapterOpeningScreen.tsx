@@ -42,9 +42,12 @@ export const ChapterOpeneningScreen = () => {
 };
 
 const monthes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+const sumChapters = (i: number) => {
+  return monthes.slice(0, i + 1).reduce((a, b) => a + b);
+};
 
 const RenderChapters = () => {
-  const monthes = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  const daysPassed = useModel().readerState.daysPassed;
   return (
     <View
       style={{
@@ -53,7 +56,8 @@ const RenderChapters = () => {
       }}
     >
       {monthes.map((month, i) => {
-        return <Month key={"chapter" + i} month={month} index={i} />;
+        if (daysPassed + month > sumChapters(i))
+          return <Month key={"chapter" + i} month={month} index={i} />;
       })}
     </View>
   );
@@ -67,11 +71,10 @@ interface MonthProps {
 const Month = ({ index, month }: MonthProps) => {
   const [chapters, setChapters] = React.useState<number[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
-  const sumChapters = monthes.slice(0, index + 1).reduce((a, b) => a + b);
 
   React.useEffect(() => {
     let curChapters: number[] = [];
-    for (let i = sumChapters - month; i < sumChapters; i++) {
+    for (let i = sumChapters(index) - month; i < sumChapters(index); i++) {
       curChapters.push(i);
     }
     setChapters(curChapters);
