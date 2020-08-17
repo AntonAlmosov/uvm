@@ -15,4 +15,5 @@ export enum StorageRoutes {
   ReadChapters = "ReadChapters",
   OpenedChapters = "OpenedChapters",
   Points = "Points",
+  ChapterEmotions = "ChapterEmotions",
 }

@@ -14,6 +14,11 @@ export interface Chapter {
   datatext: string;
 }
 
+export interface ChapterEmotion {
+  chapter: number;
+  emotions: [boolean, boolean, boolean, boolean];
+}
+
 export interface OpenedChapter {
   id: number;
   date: string;
@@ -26,10 +31,12 @@ export interface ReaderState {
   skippedChapters: number;
   timeToNextChapter: string;
   daysPassed: number;
+  chapterEmotions: ChapterEmotion[];
 
   changePoints: (amount: number) => void;
   markChapterAsRead: (id: number) => void;
   openChapter: (id: number) => void;
+  toggleChapterEmotion: (chapter: number, index: number) => void;
 }
 
 export function useReaderState() {
@@ -42,6 +49,9 @@ export function useReaderState() {
     []
   );
   const [timeToNextChapter, setTimeToNextChapter] = React.useState<string>("");
+  const [chapterEmotions, setChapterEmotions] = React.useState<
+    ChapterEmotion[]
+  >([]);
 
   const onAppLoad = async () => {
     setTimeToNextChapter(calculateTime());
@@ -50,6 +60,7 @@ export function useReaderState() {
     await getPoints();
     await getOpenedChapters();
     await getChapters();
+    await getChapterEmotions();
     setLoading(false);
   };
 
@@ -69,6 +80,23 @@ export function useReaderState() {
     await AsyncStorage.setItem(StorageRoutes.Points, String(100), () =>
       setPoints(100)
     );
+    const chapterEmotions: ChapterEmotion[] = [];
+    for (let i = 0; i < data.length; i++) {
+      chapterEmotions.push({
+        chapter: i,
+        emotions: [false, false, false, false],
+      });
+    }
+    await AsyncStorage.setItem(
+      StorageRoutes.ChapterEmotions,
+      JSON.stringify(chapterEmotions),
+      () => setChapterEmotions(chapterEmotions)
+    );
+  };
+
+  const getChapterEmotions = async () => {
+    const value = await AsyncStorage.getItem(StorageRoutes.ChapterEmotions);
+    if (value) setChapterEmotions(JSON.parse(value) as ChapterEmotion[]);
   };
 
   const getChapters = async () => {
@@ -162,6 +190,18 @@ export function useReaderState() {
     await getOpenedChapters();
   };
 
+  const toggleChapterEmotion = async (chapter: number, index: number) => {
+    const emotionsCopy = chapterEmotions;
+    emotionsCopy[chapter].emotions[index] = !emotionsCopy[chapter].emotions[
+      index
+    ];
+    await AsyncStorage.setItem(
+      StorageRoutes.ChapterEmotions,
+      JSON.stringify(emotionsCopy),
+      () => setChapterEmotions(emotionsCopy)
+    );
+  };
+
   React.useEffect(() => {
     onAppLoad();
   }, []);
@@ -179,11 +219,20 @@ export function useReaderState() {
       skippedChapters: skippedChapters < 0 ? 0 : skippedChapters,
       timeToNextChapter,
       daysPassed,
+      chapterEmotions,
 
       changePoints,
       markChapterAsRead: (id: number) => markAsRead(id),
-      openChapter: (id: number) => openChapter(id),
+      openChapter,
+      toggleChapterEmotion,
     };
     return state;
-  }, [chapters, daysPassed, readChapters, points, openedChapters]);
+  }, [
+    chapters,
+    daysPassed,
+    readChapters,
+    points,
+    openedChapters,
+    chapterEmotions,
+  ]);
 }

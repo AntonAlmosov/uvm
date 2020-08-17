@@ -8,9 +8,12 @@ import { BackgroundColor } from "../../model/settings-state";
 
 interface ReaderReactionProps {
   emotes: [string, string, string, string];
+  chapter: number;
 }
 
-export const ReaderReaction = ({ emotes }: ReaderReactionProps) => {
+export const ReaderReaction = ({ emotes, chapter }: ReaderReactionProps) => {
+  const toggleEmotions = useModel().readerState.toggleChapterEmotion;
+  const chapterEmotions = useModel().readerState.chapterEmotions;
   return (
     <View
       style={{
@@ -23,7 +26,14 @@ export const ReaderReaction = ({ emotes }: ReaderReactionProps) => {
       }}
     >
       {emotes.map((emote, i) => {
-        return <ReactionEmote key={i} emote={emote} />;
+        return (
+          <ReactionEmote
+            key={i}
+            emote={emote}
+            initialState={chapterEmotions[chapter].emotions[i]}
+            onPress={() => toggleEmotions(chapter, i)}
+          />
+        );
       })}
     </View>
   );
@@ -31,9 +41,15 @@ export const ReaderReaction = ({ emotes }: ReaderReactionProps) => {
 
 interface ReactionEmoteProps {
   emote: string;
+  initialState: boolean;
+  onPress: () => void;
 }
 
-const ReactionEmote = ({ emote }: ReactionEmoteProps) => {
+const ReactionEmote = ({
+  emote,
+  onPress,
+  initialState,
+}: ReactionEmoteProps) => {
   const settingsState = useModel().settingsState;
   const fontColor =
     settingsState.backgroundColor === BackgroundColor.Dark
@@ -44,7 +60,7 @@ const ReactionEmote = ({ emote }: ReactionEmoteProps) => {
       ? AppStyles.shadows.light
       : AppStyles.shadows.general;
 
-  const [active, setActive] = React.useState(false);
+  const [active, setActive] = React.useState(initialState);
 
   const PADDING = 8;
   const EMOTE_WIDTH = (AppStyles.screenWidth - PADDING * 3) / 4;
@@ -62,7 +78,10 @@ const ReactionEmote = ({ emote }: ReactionEmoteProps) => {
         backgroundColor: active ? "#FDEC55" : settingsState.backgroundColor,
         borderRadius: 10,
       }}
-      onPress={() => setActive(!active)}
+      onPress={() => {
+        setActive(!active);
+        onPress();
+      }}
     >
       <Text style={{ fontSize: 24, textAlign: "center" }}>{emote}</Text>
     </TouchableOpacity>
