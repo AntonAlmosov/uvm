@@ -48,7 +48,9 @@ export const SettingsScreen = () => {
           zIndex: 9999,
         }}
       >
-        {showFontsModal && <FontsModal />}
+        {showFontsModal && (
+          <FontsModal closeModal={() => setShowFontsModal(false)} />
+        )}
         <View
           style={{
             justifyContent: "space-between",
@@ -188,12 +190,50 @@ export const SettingsScreen = () => {
             />
           </View>
         </View>
+        {/* <TouchableOpacity
+          containerStyle={{ overflow: "visible" }}
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            height: 44,
+            marginTop: 20,
+            position: "relative",
+            zIndex: 9999,
+          }}
+          onPress={() => setShowFontsModal(!showFontsModal)}
+        >
+          <Text style={{ ...AppStyles.text.text, color: "#000" }}>
+            Время уведомления
+          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text
+              style={{
+                ...AppStyles.text.text,
+                color: "#000",
+                opacity: 0.5,
+              }}
+            >
+              {"10:15"}
+            </Text>
+            <Feather
+              name={"chevron-right"}
+              size={20}
+              color={"#000"}
+              style={{ marginLeft: 8, marginTop: 4.5, opacity: 0.6 }}
+            />
+          </View>
+        </TouchableOpacity> */}
       </View>
     </SafeAreaView>
   );
 };
 
-const FontsModal = () => {
+interface FontsModalProps {
+  closeModal: () => void;
+}
+
+const FontsModal = ({ closeModal }: FontsModalProps) => {
   return (
     <View
       style={{
@@ -214,8 +254,7 @@ const FontsModal = () => {
           marginLeft: 14,
           marginRight: 14,
           marginTop: 14,
-          marginBottom: 22,
-          height: 44,
+          marginBottom: 4,
         }}
       >
         <Text
@@ -228,20 +267,39 @@ const FontsModal = () => {
           Выбор шрифта
         </Text>
       </View>
-      <FontSelecionButton fontName={Fonts.SFProRegular} />
-      <FontSelecionButton fontName={Fonts.InterRegular} />
-      <FontSelecionButton fontName={Fonts.NewYorkRegular} />
-      <FontSelecionButton fontName={Fonts.LoraRegular} />
-      <FontSelecionButton fontName={Fonts.SpectralRegular} />
+      <FontSelecionButton
+        fontName={Fonts.SFProRegular}
+        closeModal={closeModal}
+      />
+      <FontSelecionButton
+        fontName={Fonts.InterRegular}
+        closeModal={closeModal}
+      />
+      <FontSelecionButton
+        fontName={Fonts.NewYorkRegular}
+        closeModal={closeModal}
+      />
+      <FontSelecionButton
+        fontName={Fonts.LoraRegular}
+        closeModal={closeModal}
+      />
+      <FontSelecionButton
+        fontName={Fonts.SpectralRegular}
+        closeModal={closeModal}
+      />
     </View>
   );
 };
 
 interface FontSelecionButtonProps {
   fontName: Fonts;
+  closeModal: () => void;
 }
 
-const FontSelecionButton = ({ fontName }: FontSelecionButtonProps) => {
+const FontSelecionButton = ({
+  fontName,
+  closeModal,
+}: FontSelecionButtonProps) => {
   const settingsState = useModel().settingsState;
   const isBgDark = settingsState.backgroundColor === BackgroundColor.Dark;
   const fontColor = isBgDark ? "#E2D4D4" : "#000000";
@@ -251,9 +309,13 @@ const FontSelecionButton = ({ fontName }: FontSelecionButtonProps) => {
         justifyContent: "space-between",
         width: AppStyles.screenWidth - 52,
         flexDirection: "row",
-        marginBottom: 18,
+        marginBottom: 8,
+        marginTop: 8,
       }}
-      onPress={() => settingsState.setSetting(Settings.FontFamily, fontName)}
+      onPress={() => {
+        settingsState.setSetting(Settings.FontFamily, fontName);
+        closeModal();
+      }}
     >
       <Text
         style={{

@@ -7,6 +7,7 @@ export enum Settings {
   FontSize = "FontSize",
   FontFamily = "FontFamily",
   BackgroundColor = "BackgroundColor",
+  NotificationTime = "NotificationTime",
 }
 
 export enum BackgroundColor {
@@ -43,6 +44,7 @@ export function useSettingsState() {
   const [backgroundColor, setBackgroundColor] = React.useState<BackgroundColor>(
     BackgroundColor.White
   );
+  const [notificationTime, setNotificationTime] = React.useState<Date>();
 
   const getSettings = async () => {
     try {
@@ -59,6 +61,8 @@ export function useSettingsState() {
             setBackgroundColor(
               (value as BackgroundColor) || BackgroundColor.White
             );
+            break;
+          case Settings.NotificationTime:
             break;
         }
       }

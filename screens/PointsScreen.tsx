@@ -12,7 +12,7 @@ import plural from "plural-ru";
 import { NavHeader } from "../components/NavHeader";
 import { AppStyles, Fonts } from "../components/app-styles";
 import { useModel } from "../model/model";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { Routes } from "../navigation/routes";
 
@@ -23,70 +23,77 @@ export const PointsScreen = () => {
   return (
     <SafeAreaView style={styles.container}>
       <NavHeader />
-      <View
-        style={{
-          marginTop: 81,
-          width: AppStyles.screenWidth,
-          marginLeft: AppStyles.screenPadding,
-        }}
-      >
+      <ScrollView>
+        <View
+          style={{
+            marginTop: 32,
+            width: AppStyles.screenWidth,
+            marginLeft: AppStyles.screenPadding,
+          }}
+        >
+          <Text
+            style={{
+              textAlign: "center",
+              fontFamily: Fonts.SFProSemibold,
+              fontSize: 40,
+              fontWeight: "600" as "600",
+            }}
+            adjustsFontSizeToFit
+          >
+            {points + plural(points, " балл", " балла", " баллов")}
+          </Text>
+          <Text
+            style={{
+              ...AppStyles.text.text,
+              textAlign: "center",
+              marginTop: 5,
+            }}
+          >
+            Вы накопили
+          </Text>
+        </View>
         <Text
           style={{
-            textAlign: "center",
-            fontFamily: Fonts.SFProSemibold,
-            fontSize: 55,
-            fontWeight: "600" as "600",
+            width: AppStyles.screenWidth,
+            marginTop: 32,
+            marginLeft: AppStyles.screenPadding,
+            ...AppStyles.text.quoteCaption,
+            opacity: 0.7,
           }}
         >
-          {points + plural(points, " балл", " балла", " баллов")}
+          {
+            "Краткий текст о том, на что можно будет тратить баллы и как их заработать. А сейчас я буду добивать количество знаков, чтобы это выглядело примерно так-же, как текст, который будет в итоге. Такие вот дела!"
+          }
         </Text>
-        <Text
-          style={{ ...AppStyles.text.text, textAlign: "center", marginTop: 5 }}
-        >
-          Вы накопили
-        </Text>
-      </View>
-      <Text
-        style={{
-          width: AppStyles.screenWidth,
-          marginTop: 65,
-          marginLeft: AppStyles.screenPadding,
-          ...AppStyles.text.quoteCaption,
-          opacity: 0.7,
-        }}
-      >
-        {
-          "Краткий текст о том, на что можно будет тратить баллы и как их заработать. А сейчас я буду добивать количество знаков, чтобы это выглядело примерно так-же, как текст, который будет в итоге. Такие вот дела!"
-        }
-      </Text>
-      <View
-        style={{
-          width: AppStyles.screenWidth,
-          marginLeft: AppStyles.screenPadding,
-          marginTop: 84,
-        }}
-      >
-        <PrimaryButton
-          label={"Отправить приглашение"}
-          onPress={async () => {
-            const result = await Share.share(
-              {
-                message: "https://google.com",
-              },
-              {}
-            );
-            if (result.action === Share.sharedAction) {
-              addPoint(1);
-            }
+        <View
+          style={{
+            width: AppStyles.screenWidth,
+            marginLeft: AppStyles.screenPadding,
+            marginTop: 32,
           }}
-          style={{ marginBottom: 5 }}
-        />
-        <SecondaryButton
-          label={"Открыть главу"}
-          onPress={() => navigation.navigate(Routes.ChapterOpening)}
-          style={{ marginBottom: 5 }}
-        />
-      </View>
+        >
+          <PrimaryButton
+            label={"Отправить приглашение"}
+            onPress={async () => {
+              const result = await Share.share(
+                {
+                  message: "https://google.com",
+                },
+                {}
+              );
+              if (result.action === Share.sharedAction) {
+                addPoint(1);
+              }
+            }}
+            style={{ marginBottom: 5 }}
+          />
+          <SecondaryButton
+            label={"Открыть главу"}
+            onPress={() => navigation.navigate(Routes.ChapterOpening)}
+            style={{ marginBottom: 5 }}
+          />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };

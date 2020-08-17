@@ -65,6 +65,7 @@ const Paragraph = ({ text, origin }: ParagraphProps) => {
     <TouchableOpacity
       style={{ marginBottom: AppStyles.text.text.lineHeight }}
       onLongPress={onLongPress}
+      activeOpacity={0.65}
     >
       <Text
         style={{
