@@ -5,6 +5,8 @@ export const Routes = {
   Favourite: "Favourite",
   FavouriteNavigator: "FavouriteNavigator",
   Settings: "Settings",
+  Points: "Points",
+  ChapterOpening: "ChapterOpening",
 };
 
 export enum StorageRoutes {

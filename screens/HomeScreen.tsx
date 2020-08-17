@@ -42,7 +42,7 @@ export const HomeScreen = () => {
             label={"до новой главы"}
           />
           <HomeDataFragment
-            data={readerState.readChapters + " из 365"}
+            data={readerState.readChapters.length + " из 365"}
             label={"глав прочитано"}
           />
           <HomeDataFragment

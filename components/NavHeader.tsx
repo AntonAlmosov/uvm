@@ -11,9 +11,9 @@ import { Settings, BackgroundColor, FontSize } from "../model/settings-state";
 import { getFontSizeType, getFontSizeIndex, getFontFamilyName } from "./utils";
 
 interface NavHeaderProps {
-  title: string;
-  showSettings: boolean;
-  showTitle: boolean;
+  title?: string;
+  showSettings?: boolean;
+  showTitle?: boolean;
   useSettingsConstraints?: boolean;
 }
 

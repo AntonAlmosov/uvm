@@ -9,6 +9,8 @@ import { HomeTabNavigator } from "./HomeTabNavigator";
 import { ReaderScreen } from "../screens/ReaderScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 import { FavouriteTabNavigator } from "./FavouriteTabNavigator";
+import { PointsScreen } from "../screens/PointsScreen";
+import { ChapterOpeneningScreen } from "../screens/ChapterOpeningScreen";
 
 export const MainNavigation = () => {
   const Tab = createBottomTabNavigator();
@@ -18,6 +20,11 @@ export const MainNavigation = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name={"tabs"} component={TabNavigator} />
+        <Stack.Screen name={Routes.Points} component={PointsScreen} />
+        <Stack.Screen
+          name={Routes.ChapterOpening}
+          component={ChapterOpeneningScreen}
+        />
         <Stack.Screen name={Routes.Reader} component={ReaderScreen} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -2,6 +2,8 @@ import React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { AppStyles } from "./app-styles";
 import { useModel } from "../model/model";
+import { useNavigation } from "@react-navigation/native";
+import { Routes } from "../navigation/routes";
 
 interface TabHeaderProps {
   label: string;
@@ -10,6 +12,7 @@ interface TabHeaderProps {
 
 export const TabHeader = ({ label, showPoints }: TabHeaderProps) => {
   const points = useModel().readerState.points;
+  const navigation = useNavigation();
   return (
     <View
       style={{
@@ -40,6 +43,7 @@ export const TabHeader = ({ label, showPoints }: TabHeaderProps) => {
             alignItems: "center",
             justifyContent: "center",
           }}
+          onPress={() => navigation.navigate(Routes.Points)}
         >
           <Text style={{ ...AppStyles.text.quoteCaption, textAlign: "center" }}>
             {points + " Б"}

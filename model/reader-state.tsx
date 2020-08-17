@@ -22,11 +22,13 @@ export interface OpenedChapter {
 export interface ReaderState {
   chapters: Chapter[];
   points: number;
-  readChapters: number;
+  readChapters: number[];
   skippedChapters: number;
   timeToNextChapter: string;
+  daysPassed: number;
 
   markChapterAsRead: (id: number) => void;
+  openChapter: (id: number) => void;
 }
 
 export function useReaderState() {
@@ -46,14 +48,13 @@ export function useReaderState() {
     await getReadChapters();
     await getPoints();
     await getOpenedChapters();
+    await getChapters();
     setLoading(false);
   };
 
   const handleFirstAppLoad = async () => {
     const initialDate = moment().startOf("day").format("x");
-    await AsyncStorage.setItem(StorageRoutes.InitialDate, initialDate, () =>
-      setChapters([{ ...data[0], id: 0 }])
-    );
+    await AsyncStorage.setItem(StorageRoutes.InitialDate, initialDate);
     await AsyncStorage.setItem(
       StorageRoutes.ReadChapters,
       JSON.stringify([]),
@@ -70,31 +71,28 @@ export function useReaderState() {
   };
 
   const getChapters = async () => {
-    try {
-      const value = await AsyncStorage.getItem(StorageRoutes.InitialDate);
-      console.log(value);
-      //Setting initial date
-      if (!value) {
-        await handleFirstAppLoad();
-        return;
-      }
-      const currentDay = moment().startOf("day");
-      const currentDaysPassed = currentDay.diff(moment(value, "x"), "day");
-      setDaysPassed(currentDaysPassed);
-
-      if (currentDaysPassed === 0) {
-        setChapters([{ ...data[0], id: 0 }]);
-        return;
-      }
-
-      setChapters([
-        { ...data[currentDaysPassed], id: currentDaysPassed },
-        { ...data[currentDaysPassed - 1], id: currentDaysPassed - 1 },
-      ]);
-      return;
-    } catch (err) {
-      console.error(err);
+    const value = await AsyncStorage.getItem(StorageRoutes.InitialDate);
+    //Setting initial date
+    if (!value) {
+      await handleFirstAppLoad();
+      return [{ ...data[0], id: 0 }];
     }
+    const currentDay = moment().startOf("day");
+    const currentDaysPassed = currentDay.diff(moment(value, "x"), "day") + 30;
+    setDaysPassed(currentDaysPassed);
+    const opened = openedChapters.map((ch) => {
+      return { ...data[ch.id], id: ch.id };
+    });
+
+    if (currentDaysPassed === 0) {
+      setChapters([{ ...data[0], id: 0 }, ...opened]);
+    }
+
+    setChapters([
+      { ...data[currentDaysPassed], id: currentDaysPassed },
+      { ...data[currentDaysPassed - 1], id: currentDaysPassed - 1 },
+      ...opened,
+    ]);
   };
 
   const getReadChapters = async () => {
@@ -108,7 +106,7 @@ export function useReaderState() {
     );
     const actualValue = value.filter((v) => {
       const date = moment(v.date, "x");
-      return date < date.add(1, "day");
+      return date.format("x") < date.add(1, "day").format("x");
     });
     if (actualValue.length !== value.length) {
       await AsyncStorage.setItem(
@@ -167,16 +165,22 @@ export function useReaderState() {
     onAppLoad();
   }, []);
 
+  React.useEffect(() => {
+    getChapters();
+  }, [openedChapters]);
+
   return React.useMemo(() => {
     const skippedChapters = daysPassed + 1 - readChapters.length;
     const state: ReaderState = {
       chapters,
       points,
-      readChapters: readChapters.length,
+      readChapters,
       skippedChapters: skippedChapters < 0 ? 0 : skippedChapters,
       timeToNextChapter,
+      daysPassed,
 
       markChapterAsRead: (id: number) => markAsRead(id),
+      openChapter: (id: number) => openChapter(id),
     };
     return state;
   }, [chapters, daysPassed, readChapters, points, openedChapters]);
