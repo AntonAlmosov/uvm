@@ -1,6 +1,6 @@
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Alert, ActivityIndicator } from "react-native";
 import { NavHeader } from "../components/NavHeader";
 import { AppStyles, Fonts } from "../components/app-styles";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
@@ -66,6 +66,7 @@ interface MonthProps {
 
 const Month = ({ index, month }: MonthProps) => {
   const [chapters, setChapters] = React.useState<number[]>([]);
+  const [loading, setLoading] = React.useState<boolean>(true);
   const sumChapters = monthes.slice(0, index + 1).reduce((a, b) => a + b);
 
   React.useEffect(() => {
@@ -74,6 +75,7 @@ const Month = ({ index, month }: MonthProps) => {
       curChapters.push(i);
     }
     setChapters(curChapters);
+    setLoading(false);
   }, []);
 
   return (
@@ -99,6 +101,18 @@ const Month = ({ index, month }: MonthProps) => {
           <Chapter key={"chapter" + i} index={i} />
         ))}
       </View>
+      {loading && (
+        <View
+          style={{
+            width: "100%",
+            height: (AppStyles.screenWidth / 7) * 5,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ActivityIndicator size={"large"} color={"#000"} />
+        </View>
+      )}
     </View>
   );
 };
@@ -111,10 +125,22 @@ const Chapter = ({ index }: ChapterProps) => {
   const daysPassed = useModel().readerState.daysPassed;
   const readChapters = useModel().readerState.readChapters;
   const chapters = useModel().readerState.chapters;
+  const points = useModel().readerState.points;
   const openChapter = useModel().readerState.openChapter;
   const opened = index <= daysPassed;
   const availale = chapters.some((ch) => ch.id === index);
   const read = readChapters.includes(index);
+  const callOpenerAlert = () =>
+    Alert.alert(
+      "Открыть главу?",
+      "Глава будет доступна для чтения в течении суток, после этого она будет снова недоступна.",
+      [{ text: "Да", onPress: () => openChapter(index) }, { text: "Нет" }]
+    );
+  const callEmptyAlert = () =>
+    Alert.alert(
+      "Недостаточно очков",
+      "У вас недостаточно очков, чтобы открыть новые главы. Читайте главы текущего дня или делитесь приложением с друзьями, чтобы заработать очки"
+    );
   return (
     <TouchableOpacity
       style={{
@@ -123,7 +149,7 @@ const Chapter = ({ index }: ChapterProps) => {
         justifyContent: "center",
         alignItems: "center",
       }}
-      onPress={() => openChapter(index)}
+      onPress={points ? callOpenerAlert : callEmptyAlert}
       disabled={!opened || availale}
     >
       <Text

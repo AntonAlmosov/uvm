@@ -19,6 +19,7 @@ import { Routes } from "../navigation/routes";
 export const PointsScreen = () => {
   const points = useModel().readerState.points;
   const navigation = useNavigation();
+  const addPoint = useModel().readerState.changePoints;
   return (
     <SafeAreaView style={styles.container}>
       <NavHeader />
@@ -67,14 +68,17 @@ export const PointsScreen = () => {
       >
         <PrimaryButton
           label={"Отправить приглашение"}
-          onPress={() =>
-            Share.share(
+          onPress={async () => {
+            const result = await Share.share(
               {
                 message: "https://google.com",
               },
               {}
-            )
-          }
+            );
+            if (result.action === Share.sharedAction) {
+              addPoint(1);
+            }
+          }}
           style={{ marginBottom: 5 }}
         />
         <SecondaryButton

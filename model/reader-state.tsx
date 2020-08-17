@@ -27,6 +27,7 @@ export interface ReaderState {
   timeToNextChapter: string;
   daysPassed: number;
 
+  changePoints: (amount: number) => void;
   markChapterAsRead: (id: number) => void;
   openChapter: (id: number) => void;
 }
@@ -126,7 +127,7 @@ export function useReaderState() {
     await AsyncStorage.setItem(
       StorageRoutes.Points,
       String(points + amount),
-      () => setPoints(points)
+      () => setPoints(points + amount)
     );
   };
 
@@ -144,7 +145,7 @@ export function useReaderState() {
         JSON.stringify([...readChapters, id]),
         () => setReadChapters([...readChapters, id])
       );
-      await changePoints(1);
+      if (!openedChapters.some((ch) => ch.id === id)) await changePoints(1);
     } catch (err) {
       console.error(err);
     }
@@ -179,6 +180,7 @@ export function useReaderState() {
       timeToNextChapter,
       daysPassed,
 
+      changePoints,
       markChapterAsRead: (id: number) => markAsRead(id),
       openChapter: (id: number) => openChapter(id),
     };
