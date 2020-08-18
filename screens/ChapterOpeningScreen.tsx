@@ -32,7 +32,7 @@ export const ChapterOpeneningScreen = () => {
           }}
         >
           {
-            "Описание, как работает эта фича. Нужно будет подумать, сколько баллов стоит одна глава и все такое. На самом деле, это не так важно, и я совершенно не уверен в таком виде этого раздела."
+            "Новые главы открываются каждый день. За баллы можно открыть главы, которые вы пропустили (желтые) или хотите прочитать еще раз (черные). Главу можно открыть за один бал."
           }
         </Text>
         <RenderChapters />
@@ -56,7 +56,7 @@ const RenderChapters = () => {
       }}
     >
       {monthes.map((month, i) => {
-        if (daysPassed + month > sumChapters(i))
+        if (daysPassed + 1 + month > sumChapters(i))
           return <Month key={"chapter" + i} month={month} index={i} />;
       })}
     </View>

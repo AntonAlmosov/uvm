@@ -77,8 +77,8 @@ export function useReaderState() {
       JSON.stringify([]),
       () => setOpenedChapters([])
     );
-    await AsyncStorage.setItem(StorageRoutes.Points, String(100), () =>
-      setPoints(100)
+    await AsyncStorage.setItem(StorageRoutes.Points, String(1), () =>
+      setPoints(1)
     );
     const chapterEmotions: ChapterEmotion[] = [];
     for (let i = 0; i < data.length; i++) {
@@ -107,7 +107,7 @@ export function useReaderState() {
       return [{ ...data[0], id: 0 }];
     }
     const currentDay = moment().startOf("day");
-    const currentDaysPassed = currentDay.diff(moment(value, "x"), "day") + 30;
+    const currentDaysPassed = currentDay.diff(moment(value, "x"), "day");
     setDaysPassed(currentDaysPassed);
     const opened = openedChapters.map((ch) => {
       return { ...data[ch.id], id: ch.id };
@@ -115,6 +115,7 @@ export function useReaderState() {
 
     if (currentDaysPassed === 0) {
       setChapters([{ ...data[0], id: 0 }, ...opened]);
+      return;
     }
 
     setChapters([
