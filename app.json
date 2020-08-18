@@ -17,7 +17,7 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.almosovanton.uvmapp"
+      "bundleIdentifier": "com.artemnovichenkov.uvm"
     }
   }
 }
