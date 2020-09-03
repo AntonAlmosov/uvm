@@ -102,7 +102,7 @@ const QuoteItem = ({ value, origin, id }: Quote) => {
             break;
           case 3:
             Share.share({
-              message: value,
+              message: `${value} \n\n «Утро Вечера Мудренее», рассказ каждый день: \n https://testflight.apple.com/join/kbrFGKJh`,
             });
             break;
         }

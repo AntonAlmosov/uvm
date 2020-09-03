@@ -9,6 +9,8 @@ import { HomeDataFragment } from "../components/home/HomeDataFragment";
 import { useNavigation } from "@react-navigation/native";
 import { Routes } from "../navigation/routes";
 import { useModel } from "../model/model";
+import { PrimaryButton } from "../components/buttons";
+import { AppStyles } from "../components/app-styles";
 
 export const HomeScreen = () => {
   const navigation = useNavigation();
@@ -38,6 +40,13 @@ export const HomeScreen = () => {
               }
             />
           ))}
+          {readerState.daysPassed > 2 && (
+            <PrimaryButton
+              label={"Открыть главу"}
+              style={{ marginLeft: AppStyles.screenPadding }}
+              onPress={() => navigation.navigate(Routes.ChapterOpening)}
+            />
+          )}
           <View style={{ marginTop: 32, paddingBottom: 128 }}>
             <HomeDataFragment
               data={readerState.timeToNextChapter}

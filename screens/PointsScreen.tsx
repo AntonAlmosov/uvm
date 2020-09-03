@@ -15,6 +15,7 @@ import { useModel } from "../model/model";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { Routes } from "../navigation/routes";
+import { SecondaryButton, PrimaryButton } from "../components/buttons";
 
 export const PointsScreen = () => {
   const points = useModel().readerState.points;
@@ -77,7 +78,8 @@ export const PointsScreen = () => {
             onPress={async () => {
               const result = await Share.share(
                 {
-                  message: "https://google.com",
+                  message:
+                    "«Утро Вечера Мудренее», рассказ каждый день: \n https://testflight.apple.com/join/kbrFGKJh",
                 },
                 {}
               );
@@ -95,81 +97,6 @@ export const PointsScreen = () => {
         </View>
       </ScrollView>
     </SafeAreaView>
-  );
-};
-
-interface ButtonWrapperProps {
-  onPress: () => void;
-  children: ReactChild;
-  style?: ViewStyle;
-}
-
-const ButtonWrapper = ({ onPress, children, style }: ButtonWrapperProps) => {
-  return (
-    <TouchableOpacity
-      style={{
-        ...style,
-        width: AppStyles.screenWidth,
-        height: AppStyles.screenWidth * 0.15,
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: 10,
-      }}
-      onPress={onPress}
-    >
-      {children}
-    </TouchableOpacity>
-  );
-};
-
-interface ButtonProps {
-  label: string;
-  onPress: () => void;
-  style: ViewStyle;
-}
-
-const PrimaryButton = ({ label, onPress, style }: ButtonProps) => {
-  return (
-    <ButtonWrapper
-      style={{ backgroundColor: "#F1D438", ...style }}
-      onPress={onPress}
-    >
-      <Text
-        style={{
-          fontFamily: Fonts.SFProSemibold,
-          fontSize: 17,
-          fontWeight: "600" as "600",
-          color: "#fff",
-        }}
-      >
-        {label}
-      </Text>
-    </ButtonWrapper>
-  );
-};
-
-const SecondaryButton = ({ label, onPress, style }: ButtonProps) => {
-  return (
-    <ButtonWrapper
-      style={{
-        backgroundColor: "#fff",
-        borderColor: "#F1D438",
-        borderWidth: 2,
-        ...style,
-      }}
-      onPress={onPress}
-    >
-      <Text
-        style={{
-          fontFamily: Fonts.SFProSemibold,
-          fontSize: 17,
-          fontWeight: "600" as "600",
-          color: "#F1D438",
-        }}
-      >
-        {label}
-      </Text>
-    </ButtonWrapper>
   );
 };
 
