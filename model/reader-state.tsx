@@ -33,6 +33,7 @@ export interface ReaderState {
   daysPassed: number;
   chapterEmotions: ChapterEmotion[];
 
+  loading: boolean;
   changePoints: (amount: number) => void;
   markChapterAsRead: (id: number) => void;
   openChapter: (id: number) => void;
@@ -168,16 +169,12 @@ export function useReaderState() {
       return;
     }
 
-    try {
-      await AsyncStorage.setItem(
-        StorageRoutes.ReadChapters,
-        JSON.stringify([...readChapters, id]),
-        () => setReadChapters([...readChapters, id])
-      );
-      if (!openedChapters.some((ch) => ch.id === id)) await changePoints(1);
-    } catch (err) {
-      console.error(err);
-    }
+    await AsyncStorage.setItem(
+      StorageRoutes.ReadChapters,
+      JSON.stringify([...readChapters, id]),
+      () => setReadChapters([...readChapters, id])
+    );
+    if (!openedChapters.some((ch) => ch.id === id)) await changePoints(1);
   };
 
   const openChapter = async (id: number) => {
@@ -222,6 +219,7 @@ export function useReaderState() {
       daysPassed,
       chapterEmotions,
 
+      loading,
       changePoints,
       markChapterAsRead: (id: number) => markAsRead(id),
       openChapter,
@@ -229,6 +227,7 @@ export function useReaderState() {
     };
     return state;
   }, [
+    loading,
     chapters,
     daysPassed,
     readChapters,
