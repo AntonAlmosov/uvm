@@ -10,9 +10,16 @@ interface StoryCardProps {
   emoji: string;
   text: string;
   onPress: () => void;
+  disabled?: boolean;
 }
 
-export const StoryCard = ({ title, emoji, text, onPress }: StoryCardProps) => {
+export const StoryCard = ({
+  title,
+  emoji,
+  text,
+  onPress,
+  disabled,
+}: StoryCardProps) => {
   return (
     <TouchableOpacity
       containerStyle={{ overflow: "visible" }}
@@ -29,6 +36,7 @@ export const StoryCard = ({ title, emoji, text, onPress }: StoryCardProps) => {
         marginBottom: 16,
       }}
       onPress={onPress}
+      disabled={disabled}
     >
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={{ ...AppStyles.text.heading2, width: "60%" }}>

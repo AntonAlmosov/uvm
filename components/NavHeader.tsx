@@ -45,7 +45,7 @@ export const NavHeader = ({
     >
       <TouchableOpacity
         style={{
-          alignItems: "center",
+          alignItems: "flex-start",
           justifyContent: "center",
           width: 44,
           height: 44,
@@ -99,7 +99,7 @@ const SettingsButton = () => {
       <TouchableOpacity
         style={{
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "flex-end",
           width: 44,
           height: 44,
         }}

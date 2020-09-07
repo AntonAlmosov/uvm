@@ -3,6 +3,8 @@ import React from "react";
 import { Quote, useQuotesState, QuotesState } from "./quotes-state";
 import { useSettingsState, SettingsState } from "./settings-state";
 import { useReaderState, ReaderState } from "./reader-state";
+import { AsyncStorage } from "react-native";
+import { StorageRoutes } from "../navigation/routes";
 
 const Context = React.createContext<Model | null>(null);
 
@@ -10,21 +12,36 @@ interface Model {
   quotesState: QuotesState;
   settingsState: SettingsState;
   readerState: ReaderState;
+  onboardingPassed: boolean;
+  markOnboardingAsCompleted: () => void;
 }
 
 function assembleModel() {
   const quotesState = useQuotesState();
   const settingsState = useSettingsState();
   const readerState = useReaderState();
+  const [onboardingPassed, setOnboardingPassed] = React.useState(true);
+
+  AsyncStorage.getItem(StorageRoutes.OnboardingPassed, (err, res) => {
+    setOnboardingPassed(res ? true : false);
+  });
+
+  const markOnboardingAsCompleted = async () => {
+    await AsyncStorage.setItem(StorageRoutes.OnboardingPassed, "true", () =>
+      setOnboardingPassed(true)
+    );
+  };
 
   const value = React.useMemo(() => {
     const model: Model = {
       quotesState,
       settingsState,
       readerState,
+      onboardingPassed,
+      markOnboardingAsCompleted,
     };
     return model;
-  }, [quotesState, settingsState, readerState]);
+  }, [quotesState, settingsState, readerState, onboardingPassed]);
   return value;
 }
 

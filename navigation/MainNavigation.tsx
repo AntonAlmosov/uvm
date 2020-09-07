@@ -11,14 +11,27 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { FavouriteTabNavigator } from "./FavouriteTabNavigator";
 import { PointsScreen } from "../screens/PointsScreen";
 import { ChapterOpeneningScreen } from "../screens/ChapterOpeningScreen";
+import { OnboradingInitialScreen } from "../screens/OnboradingInitialScreen";
+import { useModel } from "../model/model";
+import { OnboradingSecondScreen } from "../screens/OnboradingSecondScreen";
+import { OnboradingThirdScreen } from "../screens/OnboradingThirdScreen";
 
 export const MainNavigation = () => {
-  const Tab = createBottomTabNavigator();
+  const model = useModel();
   const Stack = createStackNavigator();
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        screenOptions={{ headerShown: false }}
+        initialRouteName={
+          model.onboardingPassed ? Routes.Home : "onboradingStack"
+        }
+      >
+        <Stack.Screen
+          name={"onboradingStack"}
+          component={OnboardingNavigator}
+        />
         <Stack.Screen name={"tabs"} component={TabNavigator} />
         <Stack.Screen name={Routes.Points} component={PointsScreen} />
         <Stack.Screen
@@ -28,6 +41,26 @@ export const MainNavigation = () => {
         <Stack.Screen name={Routes.Reader} component={ReaderScreen} />
       </Stack.Navigator>
     </NavigationContainer>
+  );
+};
+
+const OnboardingNavigator = () => {
+  const Stack = createStackNavigator();
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen
+        name={Routes.Onboarding.Initial}
+        component={OnboradingInitialScreen}
+      />
+      <Stack.Screen
+        name={Routes.Onboarding.Second}
+        component={OnboradingSecondScreen}
+      />
+      <Stack.Screen
+        name={Routes.Onboarding.Third}
+        component={OnboradingThirdScreen}
+      />
+    </Stack.Navigator>
   );
 };
 

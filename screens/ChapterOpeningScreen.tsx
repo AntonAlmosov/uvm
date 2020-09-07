@@ -68,7 +68,7 @@ interface MonthProps {
   index: number;
 }
 
-const Month = ({ index, month }: MonthProps) => {
+export const Month = ({ index, month }: MonthProps) => {
   const [chapters, setChapters] = React.useState<number[]>([]);
   const [loading, setLoading] = React.useState<boolean>(true);
 

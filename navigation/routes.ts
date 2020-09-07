@@ -7,9 +7,15 @@ export const Routes = {
   Settings: "Settings",
   Points: "Points",
   ChapterOpening: "ChapterOpening",
+  Onboarding: {
+    Initial: "OnboardingInitial",
+    Second: "OnboardingSecond",
+    Third: "OnboardingThird",
+  },
 };
 
 export enum StorageRoutes {
+  OnboardingPassed = "OnboardingPassed",
   Quotes = "Quotes",
   InitialDate = "InitialDate",
   ReadChapters = "ReadChapters",
