@@ -23,7 +23,7 @@ function assembleModel() {
   const [onboardingPassed, setOnboardingPassed] = React.useState(true);
 
   AsyncStorage.getItem(StorageRoutes.OnboardingPassed, (err, res) => {
-    setOnboardingPassed(res ? true : false);
+    setOnboardingPassed(res === "true" ? true : false);
   });
 
   const markOnboardingAsCompleted = async () => {

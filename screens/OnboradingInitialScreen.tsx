@@ -11,23 +11,26 @@ import { Routes } from "../navigation/routes";
 export const OnboradingInitialScreen = () => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
-      <Text
-        style={{
-          ...AppStyles.text.heading1,
-          fontSize: 50,
-          lineHeight: 60,
-          marginTop: 35,
-          width: AppStyles.screenWidth,
-          marginLeft: AppStyles.screenPadding,
-        }}
-      >
-        {"Утро\nВечера\nМудренее"}
-      </Text>
+    <SafeAreaView
+      style={{ ...styles.container, justifyContent: "space-between" }}
+    >
+      <View style={{ flex: 1, justifyContent: "center" }}>
+        <Text
+          style={{
+            ...AppStyles.text.heading1,
+            fontSize: 50,
+            lineHeight: 60,
+            marginTop: 35,
+            width: AppStyles.screenWidth,
+            marginLeft: AppStyles.screenPadding,
+          }}
+        >
+          {"Утро\nВечера\nМудренее"}
+        </Text>
+      </View>
       <View
         style={{
-          position: "absolute",
-          bottom: 40,
+          marginBottom: 40,
           width: AppStyles.screenWidth,
           marginLeft: AppStyles.screenPadding,
         }}
@@ -56,7 +59,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingBottom: 0,
-    position: "relative",
     backgroundColor: "#fff",
   },
 });

@@ -1,6 +1,6 @@
 import React from "react";
 import { Feather } from "@expo/vector-icons";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { SettingsScreen } from "../screens/SettingsScreen";
@@ -22,17 +22,12 @@ export const MainNavigation = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{ headerShown: false }}
-        initialRouteName={
-          model.onboardingPassed ? Routes.Home : "onboradingStack"
-        }
-      >
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name={"tabs"} component={TabNavigator} />
         <Stack.Screen
           name={"onboradingStack"}
           component={OnboardingNavigator}
         />
-        <Stack.Screen name={"tabs"} component={TabNavigator} />
         <Stack.Screen name={Routes.Points} component={PointsScreen} />
         <Stack.Screen
           name={Routes.ChapterOpening}
@@ -66,6 +61,13 @@ const OnboardingNavigator = () => {
 
 const TabNavigator = () => {
   const Tab = createBottomTabNavigator();
+  const model = useModel();
+  const navigation = useNavigation();
+  React.useEffect(() => {
+    if (!model.onboardingPassed) {
+      navigation.navigate("onboradingStack");
+    }
+  }, [model]);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

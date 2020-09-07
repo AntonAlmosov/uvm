@@ -9,9 +9,11 @@ import { PrimaryButton } from "../components/buttons";
 import { StoryCard } from "../components/home/StoryCard";
 import { Routes } from "../navigation/routes";
 import { Month } from "./ChapterOpeningScreen";
+import { useModel } from "../model/model";
 
 export const OnboradingThirdScreen = () => {
   const navigation = useNavigation();
+  const model = useModel();
   const [chapters, setChapters] = React.useState<
     Array<{
       index: number;
@@ -48,22 +50,12 @@ export const OnboradingThirdScreen = () => {
     <SafeAreaView
       style={{ ...styles.container, justifyContent: "space-between" }}
     >
-      <Text
-        style={{
-          ...AppStyles.text.heading1,
-          fontSize: 50,
-          lineHeight: 60,
-          marginTop: 35,
-          width: AppStyles.screenWidth,
-          marginLeft: AppStyles.screenPadding,
-        }}
-      >
-        {"Открывайте"}
-      </Text>
       <View
         style={{
+          flex: 1,
           width: AppStyles.screenWidth,
           alignItems: "center",
+          justifyContent: "center",
           marginLeft: AppStyles.screenPadding,
         }}
       >
@@ -135,8 +127,11 @@ export const OnboradingThirdScreen = () => {
           чтение глав и за то что вы делитесь приложением с друзьями.
         </Text>
         <PrimaryButton
-          label={"Далее"}
-          onPress={() => navigation.navigate(Routes.Onboarding.Third)}
+          label={"Начать"}
+          onPress={() => {
+            model.markOnboardingAsCompleted();
+            navigation.navigate("tabs");
+          }}
           style={{}}
         />
       </View>

@@ -15,27 +15,17 @@ export const OnboradingSecondScreen = () => {
     <SafeAreaView
       style={{ ...styles.container, justifyContent: "space-between" }}
     >
-      <Text
-        style={{
-          ...AppStyles.text.heading1,
-          fontSize: 50,
-          lineHeight: 60,
-          marginTop: 35,
-          width: AppStyles.screenWidth,
-          marginLeft: AppStyles.screenPadding,
-        }}
-      >
-        {"Ежедневно"}
-      </Text>
-      <StoryCard
-        title={"День 7"}
-        emoji={"👵"}
-        disabled
-        onPress={() => {}}
-        text={
-          "Бог-то богом, но если все его молитвы читать, то и на хлеб времени не хватит."
-        }
-      />
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <StoryCard
+          title={"День 7"}
+          emoji={"👵"}
+          disabled
+          onPress={() => {}}
+          text={
+            "Бог-то богом, но если все его молитвы читать, то и на хлеб времени не хватит."
+          }
+        />
+      </View>
       <View
         style={{
           marginBottom: 40,
