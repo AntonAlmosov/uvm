@@ -1,0 +1,74 @@
+import React from "react";
+import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+import { TabHeader } from "../components/TabHeader";
+import { useNavigation } from "@react-navigation/native";
+import { AppStyles, Fonts } from "../components/app-styles";
+import { PrimaryButton } from "../components/buttons";
+import { StoryCard } from "../components/home/StoryCard";
+import { Routes } from "../navigation/routes";
+
+export const OnboradingSecondScreen = () => {
+  const navigation = useNavigation();
+  return (
+    <SafeAreaView
+      style={{ ...styles.container, justifyContent: "space-between" }}
+    >
+      <Text
+        style={{
+          ...AppStyles.text.heading1,
+          fontSize: 50,
+          lineHeight: 60,
+          marginTop: 35,
+          width: AppStyles.screenWidth,
+          marginLeft: AppStyles.screenPadding,
+        }}
+      >
+        {"Ежедневно"}
+      </Text>
+      <StoryCard
+        title={"День 7"}
+        emoji={"👵"}
+        disabled
+        onPress={() => {}}
+        text={
+          "Бог-то богом, но если все его молитвы читать, то и на хлеб времени не хватит."
+        }
+      />
+      <View
+        style={{
+          marginBottom: 40,
+          width: AppStyles.screenWidth,
+          justifyContent: "flex-end",
+          height: 200,
+          marginLeft: AppStyles.screenPadding,
+        }}
+      >
+        <Text
+          style={{
+            marginBottom: 32,
+            ...AppStyles.text.quote,
+          }}
+        >
+          Новый день — новая глава. У вас будет ровно двое суток на то чтобы ее
+          прочитать. Следите за жизнью Сома, станьте Сомом, живите будучи Сомом.
+        </Text>
+        <PrimaryButton
+          label={"Далее"}
+          onPress={() => navigation.navigate(Routes.Onboarding.Third)}
+          style={{}}
+        />
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingBottom: 0,
+    position: "relative",
+    backgroundColor: "#fff",
+  },
+});
