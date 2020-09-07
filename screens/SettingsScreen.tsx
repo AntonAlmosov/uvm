@@ -13,10 +13,12 @@ import {
   getFontSizeType,
 } from "../components/utils";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useNavigation } from "@react-navigation/native";
 
 export const SettingsScreen = () => {
   const settingsState = useModel().settingsState;
   const [showFontsModal, setShowFontsModal] = React.useState<boolean>(false);
+  const navigation = useNavigation();
 
   const handleSliderChange = (value: number) => {
     settingsState.setSetting(Settings.FontSize, getFontSizeType(value));
@@ -224,6 +226,31 @@ export const SettingsScreen = () => {
             />
           </View>
         </TouchableOpacity> */}
+        <TouchableOpacity
+          containerStyle={{ overflow: "visible" }}
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            height: 44,
+            marginTop: 20,
+            position: "relative",
+            zIndex: 9999,
+          }}
+          onPress={() => navigation.navigate("onboradingStack")}
+        >
+          <Text style={{ ...AppStyles.text.text, color: "#000" }}>
+            Пройти онбординг
+          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Feather
+              name={"chevron-right"}
+              size={20}
+              color={"#000"}
+              style={{ marginLeft: 8, marginTop: 4.5, opacity: 0.6 }}
+            />
+          </View>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
