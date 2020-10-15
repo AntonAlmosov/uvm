@@ -137,7 +137,7 @@ export function useReaderState() {
     );
     const actualValue = value.filter((v) => {
       const date = moment(v.date, "x");
-      return date.format("x") < date.add(1, "day").format("x");
+      return moment().format("x") < date.add(1, "day").format("x");
     });
     if (actualValue.length !== value.length) {
       await AsyncStorage.setItem(
