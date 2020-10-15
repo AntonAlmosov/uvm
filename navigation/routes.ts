@@ -11,6 +11,7 @@ export const Routes = {
     Initial: "OnboardingInitial",
     Second: "OnboardingSecond",
     Third: "OnboardingThird",
+    Fourth: "OnboardingFourth",
   },
 };
 

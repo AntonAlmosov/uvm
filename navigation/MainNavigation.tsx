@@ -15,6 +15,7 @@ import { OnboradingInitialScreen } from "../screens/OnboradingInitialScreen";
 import { useModel } from "../model/model";
 import { OnboradingSecondScreen } from "../screens/OnboradingSecondScreen";
 import { OnboradingThirdScreen } from "../screens/OnboradingThirdScreen";
+import { OnboradingFourthScreen } from "../screens/OnboradingFourthScreen";
 
 export const MainNavigation = () => {
   const model = useModel();
@@ -54,6 +55,10 @@ const OnboardingNavigator = () => {
       <Stack.Screen
         name={Routes.Onboarding.Third}
         component={OnboradingThirdScreen}
+      />
+      <Stack.Screen
+        name={Routes.Onboarding.Fourth}
+        component={OnboradingFourthScreen}
       />
     </Stack.Navigator>
   );

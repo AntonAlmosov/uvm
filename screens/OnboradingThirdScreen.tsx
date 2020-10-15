@@ -123,14 +123,13 @@ export const OnboradingThirdScreen = () => {
             ...AppStyles.text.quote,
           }}
         >
-          Вы можете открывать недоступные главы за баллы. Баллы можно получть за
-          чтение глав и за то что вы делитесь приложением с друзьями.
+          Вы можете открывать пропущенные главы за баллы. Баллы можно получть за
+          чтение глав и за то, что вы делитесь цитатами с дрзьями с друзьями.
         </Text>
         <PrimaryButton
-          label={"Начать"}
+          label={"Далее"}
           onPress={() => {
-            model.markOnboardingAsCompleted();
-            navigation.navigate("tabs");
+            navigation.navigate(Routes.Onboarding.Fourth);
           }}
           style={{}}
         />

@@ -7,7 +7,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { AppStyles, Fonts } from "./app-styles";
 import { useModel } from "../model/model";
-import { Settings, BackgroundColor, FontSize } from "../model/settings-state";
+import { Settings, BackgroundColor } from "../model/settings-state";
 import { getFontSizeType, getFontSizeIndex, getFontFamilyName } from "./utils";
 
 interface NavHeaderProps {

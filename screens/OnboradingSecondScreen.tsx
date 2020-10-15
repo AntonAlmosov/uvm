@@ -15,7 +15,14 @@ export const OnboradingSecondScreen = () => {
     <SafeAreaView
       style={{ ...styles.container, justifyContent: "space-between" }}
     >
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          marginLeft: -16,
+        }}
+      >
         <StoryCard
           title={"День 7"}
           emoji={"👵"}
@@ -31,7 +38,7 @@ export const OnboradingSecondScreen = () => {
           marginBottom: 40,
           width: AppStyles.screenWidth,
           justifyContent: "flex-end",
-          height: 200,
+          height: 250,
           marginLeft: AppStyles.screenPadding,
         }}
       >
@@ -42,7 +49,10 @@ export const OnboradingSecondScreen = () => {
           }}
         >
           Новый день — новая глава. У вас будет ровно двое суток на то чтобы ее
-          прочитать. Следите за жизнью Сома, станьте Сомом, живите будучи Сомом.
+          прочитать. Следите за жизнью Сома, станьте Сомом, живите Сомом. Но не
+          пытайтесь делать это каждый день. Дни практически не объединены
+          сюжетом, поэтому открывать их можно фрагментарно. Вы все равно не
+          спасете Сома от провалов в памяти.
         </Text>
         <PrimaryButton
           label={"Далее"}
