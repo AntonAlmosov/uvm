@@ -121,7 +121,6 @@ export function useReaderState() {
 
     setChapters([
       { ...data[currentDaysPassed], id: currentDaysPassed },
-      { ...data[currentDaysPassed - 1], id: currentDaysPassed - 1 },
       ...opened,
     ]);
   };
