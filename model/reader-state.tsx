@@ -114,11 +114,6 @@ export function useReaderState() {
       return { ...data[ch.id], id: ch.id };
     });
 
-    if (currentDaysPassed === 0) {
-      setChapters([{ ...data[0], id: 0 }, ...opened]);
-      return;
-    }
-
     setChapters([
       { ...data[currentDaysPassed], id: currentDaysPassed },
       ...opened,
