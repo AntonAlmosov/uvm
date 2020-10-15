@@ -64,7 +64,7 @@ export const ReaderScreen = () => {
           text={chapter.datatext}
           origin={"День " + (chapterId + 1)}
         />
-        <ReaderReaction emotes={["😖", "🙃", "🎰", "🐹"]} chapter={chapterId} />
+        <ReaderReaction emotes={["😢", "🤔", "😇", "😤"]} chapter={chapterId} />
       </ScrollView>
     </SafeAreaView>
   );
