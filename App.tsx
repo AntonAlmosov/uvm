@@ -2,6 +2,12 @@ import React from "react";
 import { AppLoading } from "expo";
 import { MainNavigation } from "./navigation/MainNavigation";
 import * as Font from "expo-font";
+import { InMemoryCache, ApolloClient, ApolloProvider } from "@apollo/client";
+
+const client = new ApolloClient({
+  cache: new InMemoryCache({}),
+  uri: "http://localhost:1337/graphql",
+});
 
 import { Fonts } from "./components/app-styles";
 import { ModelContext } from "./model/model";
@@ -45,9 +51,11 @@ export default function App() {
 
   if (isAppLoaded)
     return (
-      <ModelContext>
-        <MainNavigation />
-      </ModelContext>
+      <ApolloProvider client={client}>
+        <ModelContext>
+          <MainNavigation />
+        </ModelContext>
+      </ApolloProvider>
     );
   else return <AppLoading startAsync={Load} onFinish={handleLoaded} />;
 }
