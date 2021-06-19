@@ -1013,7 +1013,7 @@ export type ChapterQuery = (
   { __typename?: 'Query' }
   & { chapter?: Maybe<(
     { __typename?: 'Chapter' }
-    & Pick<Chapter, 'title' | 'description' | 'text'>
+    & Pick<Chapter, 'title' | 'emoji' | 'description' | 'text'>
   )> }
 );
 
@@ -1033,6 +1033,7 @@ export const ChapterDocument = gql`
     query Chapter($id: ID! = "1") {
   chapter(id: $id) {
     title
+    emoji
     description
     text
   }
