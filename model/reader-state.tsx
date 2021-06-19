@@ -2,16 +2,11 @@ import * as React from "react";
 import { AsyncStorage } from "react-native";
 import { StorageRoutes } from "../navigation/routes";
 import uuid from "react-native-uuid";
-import { data } from "./data.json";
 import moment from "moment";
 import { calculateTime } from "../components/utils";
 
 export interface Chapter {
   id: number;
-  title: string;
-  smile: string;
-  text: string;
-  datatext: string;
 }
 
 export interface ChapterEmotion {
@@ -82,7 +77,7 @@ export function useReaderState() {
       setPoints(1)
     );
     const chapterEmotions: ChapterEmotion[] = [];
-    for (let i = 0; i < data.length; i++) {
+    for (let i = 0; i <= 365; i++) {
       chapterEmotions.push({
         chapter: i,
         emotions: [false, false, false, false],
@@ -105,19 +100,16 @@ export function useReaderState() {
     //Setting initial date
     if (!value) {
       await handleFirstAppLoad();
-      return [{ ...data[0], id: 0 }];
+      return [{ id: 0 }];
     }
     const currentDay = moment().startOf("day");
     const currentDaysPassed = currentDay.diff(moment(value, "x"), "day");
     setDaysPassed(currentDaysPassed);
     const opened = openedChapters.map((ch) => {
-      return { ...data[ch.id], id: ch.id };
+      return { id: ch.id };
     });
 
-    setChapters([
-      { ...data[currentDaysPassed], id: currentDaysPassed },
-      ...opened,
-    ]);
+    setChapters([{ id: currentDaysPassed }, ...opened]);
   };
 
   const getReadChapters = async () => {
@@ -184,9 +176,8 @@ export function useReaderState() {
 
   const toggleChapterEmotion = async (chapter: number, index: number) => {
     const emotionsCopy = chapterEmotions;
-    emotionsCopy[chapter].emotions[index] = !emotionsCopy[chapter].emotions[
-      index
-    ];
+    emotionsCopy[chapter].emotions[index] =
+      !emotionsCopy[chapter].emotions[index];
     await AsyncStorage.setItem(
       StorageRoutes.ChapterEmotions,
       JSON.stringify(emotionsCopy),

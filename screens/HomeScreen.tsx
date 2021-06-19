@@ -32,9 +32,7 @@ export const HomeScreen = () => {
           {readerState.chapters.map((ch) => (
             <StoryCard
               key={ch.id}
-              title={"День " + (ch.id + 1)}
-              emoji={ch.smile}
-              text={ch.text}
+              id={ch.id}
               onPress={() =>
                 navigation.navigate(Routes.Reader, { chapter: ch.id })
               }

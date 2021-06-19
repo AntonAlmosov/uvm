@@ -14,7 +14,7 @@ import { ReaderText } from "../components/reader/ReaderText";
 import { ReaderReaction } from "../components/reader/ReaderReaction";
 import { useModel } from "../model/model";
 import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
-import { data } from "../model/data.json";
+import { useChapterQuery, useChaptersQuery } from "../model/api";
 
 type ReaderScreenRouteProps = {
   Reader: { chapter: string };
@@ -26,7 +26,9 @@ export const ReaderScreen = () => {
   const settingsState = useModel().settingsState;
   const readerState = useModel().readerState;
   const chapterId = Number(useRoute<ScreenProps>().params.chapter);
-  const chapter = data[chapterId];
+  const { data: chapter } = useChapterQuery({
+    variables: { id: String(chapterId + 1) },
+  });
   const [headerTitleShown, setHeaderTitleShown] = React.useState(false);
 
   React.useEffect(() => {
@@ -37,6 +39,10 @@ export const ReaderScreen = () => {
     if (e.nativeEvent.contentOffset.y > 5) setHeaderTitleShown(true);
     else setHeaderTitleShown(false);
   };
+
+  if (chapter?.chapter === null) {
+    return null;
+  }
 
   return (
     <SafeAreaView
@@ -59,10 +65,10 @@ export const ReaderScreen = () => {
         onScroll={(e) => handleTitleState(e)}
         scrollEventThrottle={16}
       >
-        <ReaderHeading label={chapter.title} />
+        <ReaderHeading label={chapter?.chapter?.title || ""} />
         <ReaderText
-          text={chapter.datatext}
-          origin={"День " + (chapterId + 1)}
+          text={chapter?.chapter?.text || ""}
+          origin={"День " + chapterId}
         />
         <ReaderReaction emotes={["😢", "🤔", "😇", "😤"]} chapter={chapterId} />
       </ScrollView>

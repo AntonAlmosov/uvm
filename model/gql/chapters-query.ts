@@ -7,7 +7,6 @@ export const chaptersQuery = gql`
       title
       description
       text
-      index
     }
   }
 `;

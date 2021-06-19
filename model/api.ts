@@ -43,37 +43,12 @@ export type Chapter = {
   emoji?: Maybe<Scalars['String']>;
   description: Scalars['String'];
   text: Scalars['String'];
-  index: Scalars['Int'];
 };
 
 export type ChapterAggregator = {
   __typename?: 'ChapterAggregator';
   count?: Maybe<Scalars['Int']>;
   totalCount?: Maybe<Scalars['Int']>;
-  sum?: Maybe<ChapterAggregatorSum>;
-  avg?: Maybe<ChapterAggregatorAvg>;
-  min?: Maybe<ChapterAggregatorMin>;
-  max?: Maybe<ChapterAggregatorMax>;
-};
-
-export type ChapterAggregatorAvg = {
-  __typename?: 'ChapterAggregatorAvg';
-  index?: Maybe<Scalars['Float']>;
-};
-
-export type ChapterAggregatorMax = {
-  __typename?: 'ChapterAggregatorMax';
-  index?: Maybe<Scalars['Float']>;
-};
-
-export type ChapterAggregatorMin = {
-  __typename?: 'ChapterAggregatorMin';
-  index?: Maybe<Scalars['Float']>;
-};
-
-export type ChapterAggregatorSum = {
-  __typename?: 'ChapterAggregatorSum';
-  index?: Maybe<Scalars['Float']>;
 };
 
 export type ChapterConnection = {
@@ -107,12 +82,6 @@ export type ChapterConnectionId = {
   connection?: Maybe<ChapterConnection>;
 };
 
-export type ChapterConnectionIndex = {
-  __typename?: 'ChapterConnectionIndex';
-  key?: Maybe<Scalars['Int']>;
-  connection?: Maybe<ChapterConnection>;
-};
-
 export type ChapterConnectionText = {
   __typename?: 'ChapterConnectionText';
   key?: Maybe<Scalars['String']>;
@@ -140,7 +109,6 @@ export type ChapterGroupBy = {
   emoji?: Maybe<Array<Maybe<ChapterConnectionEmoji>>>;
   description?: Maybe<Array<Maybe<ChapterConnectionDescription>>>;
   text?: Maybe<Array<Maybe<ChapterConnectionText>>>;
-  index?: Maybe<Array<Maybe<ChapterConnectionIndex>>>;
 };
 
 export type ChapterInput = {
@@ -148,7 +116,6 @@ export type ChapterInput = {
   emoji?: Maybe<Scalars['String']>;
   description: Scalars['String'];
   text: Scalars['String'];
-  index: Scalars['Int'];
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -203,7 +170,7 @@ export type LocaleInput = {
 };
 
 
-export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Chapter | ChapterConnection | ChapterAggregator | ChapterAggregatorSum | ChapterAggregatorAvg | ChapterAggregatorMin | ChapterAggregatorMax | ChapterGroupBy | ChapterConnectionId | ChapterConnectionCreated_At | ChapterConnectionUpdated_At | ChapterConnectionTitle | ChapterConnectionEmoji | ChapterConnectionDescription | ChapterConnectionText | ChapterConnectionIndex | CreateChapterPayload | UpdateChapterPayload | DeleteChapterPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
+export type Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | Chapter | ChapterConnection | ChapterAggregator | ChapterGroupBy | ChapterConnectionId | ChapterConnectionCreated_At | ChapterConnectionUpdated_At | ChapterConnectionTitle | ChapterConnectionEmoji | ChapterConnectionDescription | ChapterConnectionText | CreateChapterPayload | UpdateChapterPayload | DeleteChapterPayload | I18NLocale | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_At | UploadFileConnectionUpdated_At | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_Metadata | DeleteFilePayload | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | CreateRolePayload | UpdateRolePayload | DeleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_At | UsersPermissionsUserConnectionUpdated_At | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | CreateUserPayload | UpdateUserPayload | DeleteUserPayload;
 
 export type Mutation = {
   __typename?: 'Mutation';
@@ -952,7 +919,6 @@ export type EditChapterInput = {
   emoji?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   text?: Maybe<Scalars['String']>;
-  index?: Maybe<Scalars['Int']>;
   created_by?: Maybe<Scalars['ID']>;
   updated_by?: Maybe<Scalars['ID']>;
 };
@@ -1039,7 +1005,7 @@ export type UpdateUserPayload = {
 };
 
 export type ChapterQueryVariables = Exact<{
-  id: Scalars['ID'];
+  id?: Scalars['ID'];
 }>;
 
 
@@ -1047,7 +1013,7 @@ export type ChapterQuery = (
   { __typename?: 'Query' }
   & { chapter?: Maybe<(
     { __typename?: 'Chapter' }
-    & Pick<Chapter, 'title' | 'emoji' | 'description' | 'text' | 'index'>
+    & Pick<Chapter, 'title' | 'description' | 'text'>
   )> }
 );
 
@@ -1058,19 +1024,17 @@ export type ChaptersQuery = (
   { __typename?: 'Query' }
   & { chapters?: Maybe<Array<Maybe<(
     { __typename?: 'Chapter' }
-    & Pick<Chapter, 'id' | 'title' | 'description' | 'text' | 'index'>
+    & Pick<Chapter, 'id' | 'title' | 'description' | 'text'>
   )>>> }
 );
 
 
 export const ChapterDocument = gql`
-    query Chapter($id: ID!) {
+    query Chapter($id: ID! = "1") {
   chapter(id: $id) {
     title
-    emoji
     description
     text
-    index
   }
 }
     `;
@@ -1091,7 +1055,7 @@ export const ChapterDocument = gql`
  *   },
  * });
  */
-export function useChapterQuery(baseOptions: Apollo.QueryHookOptions<ChapterQuery, ChapterQueryVariables>) {
+export function useChapterQuery(baseOptions?: Apollo.QueryHookOptions<ChapterQuery, ChapterQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<ChapterQuery, ChapterQueryVariables>(ChapterDocument, options);
       }
@@ -1109,7 +1073,6 @@ export const ChaptersDocument = gql`
     title
     description
     text
-    index
   }
 }
     `;

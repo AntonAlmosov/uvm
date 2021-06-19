@@ -4,22 +4,20 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import Emoji from "react-native-emoji";
 
 import { AppStyles } from "../app-styles";
+import { useChapterQuery } from "../../model/api";
 
 interface StoryCardProps {
-  title: string;
-  emoji: string;
-  text: string;
+  id: number;
   onPress: () => void;
   disabled?: boolean;
 }
 
-export const StoryCard = ({
-  title,
-  emoji,
-  text,
-  onPress,
-  disabled,
-}: StoryCardProps) => {
+export const StoryCard = ({ id, onPress, disabled }: StoryCardProps) => {
+  const { data } = useChapterQuery({ variables: { id: String(id + 1) } });
+  console.log(data);
+  if (data === undefined || data.chapter === null) {
+    return null;
+  }
   return (
     <TouchableOpacity
       containerStyle={{ overflow: "visible" }}
@@ -40,7 +38,7 @@ export const StoryCard = ({
     >
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={{ ...AppStyles.text.heading2, width: "60%" }}>
-          {title}
+          {"День " + (id + 1)}
         </Text>
         {/* <Emoji
           name={emoji}
@@ -51,7 +49,9 @@ export const StoryCard = ({
           }}
         /> */}
       </View>
-      <Text style={{ ...AppStyles.text.text, marginTop: 15 }}>{text}</Text>
+      <Text style={{ ...AppStyles.text.text, marginTop: 15 }}>
+        {data.chapter?.description}
+      </Text>
     </TouchableOpacity>
   );
 };
