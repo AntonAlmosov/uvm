@@ -1038,6 +1038,19 @@ export type UpdateUserPayload = {
   user?: Maybe<UsersPermissionsUser>;
 };
 
+export type ChapterQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type ChapterQuery = (
+  { __typename?: 'Query' }
+  & { chapter?: Maybe<(
+    { __typename?: 'Chapter' }
+    & Pick<Chapter, 'title' | 'emoji' | 'description' | 'text' | 'index'>
+  )> }
+);
+
 export type ChaptersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1050,6 +1063,45 @@ export type ChaptersQuery = (
 );
 
 
+export const ChapterDocument = gql`
+    query Chapter($id: ID!) {
+  chapter(id: $id) {
+    title
+    emoji
+    description
+    text
+    index
+  }
+}
+    `;
+
+/**
+ * __useChapterQuery__
+ *
+ * To run a query within a React component, call `useChapterQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChapterQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChapterQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useChapterQuery(baseOptions: Apollo.QueryHookOptions<ChapterQuery, ChapterQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ChapterQuery, ChapterQueryVariables>(ChapterDocument, options);
+      }
+export function useChapterLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ChapterQuery, ChapterQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ChapterQuery, ChapterQueryVariables>(ChapterDocument, options);
+        }
+export type ChapterQueryHookResult = ReturnType<typeof useChapterQuery>;
+export type ChapterLazyQueryHookResult = ReturnType<typeof useChapterLazyQuery>;
+export type ChapterQueryResult = Apollo.QueryResult<ChapterQuery, ChapterQueryVariables>;
 export const ChaptersDocument = gql`
     query Chapters {
   chapters {

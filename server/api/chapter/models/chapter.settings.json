@@ -2,7 +2,8 @@
   "kind": "collectionType",
   "collectionName": "chapters",
   "info": {
-    "name": "Chapter"
+    "name": "Chapter",
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -24,10 +25,6 @@
     },
     "text": {
       "type": "richtext",
-      "required": true
-    },
-    "index": {
-      "type": "integer",
       "required": true
     }
   }
