@@ -1,5 +1,5 @@
 import React from "react";
-import { AppLoading } from "expo";
+import { AppLoading, registerRootComponent } from "expo";
 import { MainNavigation } from "./navigation/MainNavigation";
 import * as Font from "expo-font";
 import { InMemoryCache, ApolloClient, ApolloProvider } from "@apollo/client";
@@ -59,3 +59,5 @@ export default function App() {
     );
   else return <AppLoading startAsync={Load} onFinish={handleLoaded} />;
 }
+
+registerRootComponent(App);

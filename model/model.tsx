@@ -5,6 +5,7 @@ import { useSettingsState, SettingsState } from "./settings-state";
 import { useReaderState, ReaderState } from "./reader-state";
 import { AsyncStorage } from "react-native";
 import { StorageRoutes } from "../navigation/routes";
+import { useChapterQuery } from "./api";
 
 const Context = React.createContext<Model | null>(null);
 
@@ -21,6 +22,8 @@ function assembleModel() {
   const settingsState = useSettingsState();
   const readerState = useReaderState();
   const [onboardingPassed, setOnboardingPassed] = React.useState(true);
+  const { data } = useChapterQuery({ variables: { id: "0" } });
+  console.log(data);
 
   AsyncStorage.getItem(StorageRoutes.OnboardingPassed, (err, res) => {
     setOnboardingPassed(res === "true" ? true : false);
